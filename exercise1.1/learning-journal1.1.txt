@@ -1,0 +1,31 @@
+ Exercise 1.1: Getting Started with Python 
+Learning Goals
+
+●	Summarize the uses and benefits of Python for web development
+●	Prepare your developer environment for programming with Python
+
+Reflection Questions
+
+1.	In your own words, what is the difference between frontend and backend web development? If you were hired to work on backend programming for a web application, what kinds of operations would you be working on?
+
+
+        Frontend web development is what the user sees and interacts with (interface/user experience).  It can be acheived through html/css, scss, sass/js(or a js framework ex: angular, vue.js, node.js, react). Html is a mark up language, which is kind of the bones of the user interface.  css deals with the styles you want your html elements to have. JS is for creating scripts. These scripts are used for DOM manipulation and communication with the backend via rest calls(ex: fetch, axios).  The backend is usually used for creating APIs(Application Programmable Interface).  The backend will handle requests from the frontend, and grab the associated data from a database. Then with the associated data, perform buisness logic based on what is needed from the query results. It then will send a response for the frontend to work with and change the display as needed. 
+
+       If I was hired as a backend developer I would expect to be writing queries, and probably working with some sort of model, view, controller set up.  I imagine it would involve writing clean code, with good testing. Debugging and stepping through code to attempt to get to a solution with as few steps as possible.  I would be writing a lot of sql scripts to preform C.R.U.D operations. Also, the company I worked for would expect adherence to a particular API design pattern.  The controllers would handle the rest calls such as GET, PUT, PATCH, POST, DELETE.  There would probably be a Controller layer, buisness logic layer(for operations), and a context layer(for DB calls).    
+
+
+2.	Imagine you’re working as a full-stack developer in the near future. Your team is asking for your advice on whether to use JavaScript or Python for a project, and you think Python would be the better choice. How would you explain the similarities and differences between the two languages to your team? Drawing from what you learned in this Exercise, what reasons would you give to convince your team that Python is the better option? 
+(Hint: refer to the Exercise section “The Benefits of Developing with Python”)
+
+
+	Well they are both great languages. There are two major benefits in this situation to splitting it up. One is if you have backend and frontend operations happening in your js scripts it could get confusing.  The splitting of backend operations for python, and frontend operations for js can help you have a clear distinction between the two languages uses in your application.  Another benefit to having python and js is they can cover different ground better.  If you're having trouble performing an operation in one, you could try it in the other.  Both languages have great features and an extremely large amount of resources/libraries. Javascripts asynchronous operations/running in the browser can be very useful.  Python is cutting edge when it comes to machine learning and data science. 
+
+      
+
+3.	Now that you’ve had an introduction to Python, write down 3 goals you have for yourself and your learning during this Achievement. You can reflect on the following questions if it helps you. What do you want to learn about Python? What do you want to get out of this Achievement? Where or what do you see yourself working on after you complete this Achievement?
+
+
+       1.  Understand the syntax for python and common libraries, as well as understand Pythons use of the 4 fundamentals of OOP.
+       2.  Understand the major benefits of using python with Django.
+       3.  Hopefully build my knowledge base as a full stack developer, and be a more versatile coder.
+
