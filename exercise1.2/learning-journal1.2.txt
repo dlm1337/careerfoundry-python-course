@@ -1,0 +1,73 @@
+Exercise 1.2: Data Types in Python
+Learning Goals
+
+●	Explain variables and data types in Python
+●	Summarize the use of objects in Python
+●	Create a data structure for your Recipe app
+
+Reflection Questions
+
+1.	Imagine you’re having a conversation with a future colleague about whether to use the iPython Shell instead of Python’s default shell.
+    What reasons would you give to explain the benefits of using the iPython Shell over the default one?
+
+     
+        I would say it is easier to read with the syntax highlighting. 
+        Continuously having to indent text for nested statements, in the default python shell, is annoying,
+        while Ipython Shell handles it automatically.
+        It is helpful that expected responses from input will print out straight away,
+        so you can see the progress as you go rather than writing out the whole script.
+
+
+2.	Python has a host of different data types that allow you to store and organize information.
+    List 4 examples of data types that Python recognizes, briefly define them,
+    and indicate whether they are scalar or non-scalar.
+
+
+        Data type	Definition	                                              Scalar or Non-Scalar?
+
+        int         This can be a negative or positive whole number.          scalar
+                    There is no limit on the amount an int can hold
+                    other than memory. Holds only 1 immutable value.
+
+        bool        The value for this can either be True or False.           scalar
+                    This is useful for checking conditions such as 
+                    500 > 600 = false. Holds only 1 immutable value.
+
+        list        Great for storing multiple values in one variable,        non-scalar
+                    and allows for manipulation of data easily. Lists
+                    can be reordered, added to, removed from, and 
+                    sorted with ease. It can hold multiple mutable
+                    values.
+
+        tuple      Great for speed/efficiency if you have use for a           non-scalar
+                   data structure that only needs to be added to, or 
+                   is not needed to be changed. It can hold multiple
+                   immutable values.
+
+		
+ 3.	A frequent question at job interviews for Python developers is:
+    what is the difference between lists and tuples in Python?
+    Write down how you would respond.
+
+
+        A list is mutable, meaning it has values that can be changed after the data structure is initiated.
+        A tuple is immutable, meaning it has values that cannot be changed after the data structure is initiated.
+        However you can add to the end of a tuple.  A list allows for being reordered, added to in any position,
+        removed from in any position, and sorted.
+
+
+4.	In the task for this Exercise,
+    you decided what you thought was the most suitable data structure for storing all the information for a recipe. 
+    Now, imagine you’re creating a language-learning app that helps users memorize vocabulary through flashcards.
+    Users can input vocabulary words, definitions, and their category (noun, verb, etc.) into the flashcards. 
+    They can then quiz themselves by flipping through the flashcards.
+    Think about the necessary data types and what would be the most suitable data structure for this language-learning app. 
+    Between tuples, lists, and dictionaries, which would you choose? Think about their respective advantages and limitations, 
+    and where flexibility might be useful if you were to continue developing the language-learning app beyond vocabulary memorization. 
+
+        
+        I would store the flash cards in a dictionary so i could have key value pairs. This would make it easier to access the vocabulary words,
+        definitions, and catagories as keys. In the outer structure i would use a Tuple as it does not sound like something that would need to be 
+        modified frequently. So all the flash cards would be dictionaries stored in an outer structure tuple.  I wouldnt see a need to manipulte
+        the data inside the tuple if it is for something that would not change.  A word, definition, and category should'nt need to be redefined.
+        If you were to expand the dictionary to include synonyms, you should reinitialize the tuple. Tuples are much faster/efficient than lists.
