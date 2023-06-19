@@ -21,17 +21,47 @@ travel app using an if-elif-else statement for the following situation:
 Write your script here. (Hint: remember what you learned about indents!)
 
 
+        available_destinations = ('orlando', 'grand canyon', 'los angeles')
+        user_desired_city = input(str('Where do you want to travel? ')).lower()
 
-
-
-
+        for x in range(0, len(available_destinations)):
+            if available_destinations[x] == user_desired_city:
+                print('Enjoy your stay in ' + available_destinations[x].capitalize())
+                break
+            elif x == len(available_destinations) - 1:
+                print('Oops, that destination is not currently available.')
 
 
 2.	Imagine you’re at a job interview for a Python developer role. The interviewer says 
     “Explain logical operators in Python”. Draft how you would respond.
 
+
+        There are three logical operators:'and', 'or', and 'not'. These will check through multiple conditions
+        or expressions. The 'and' operator will return true, if all conditons or expressions are true. 
+        The 'or' operator will return true, if at least one condition or expression is true. The 'not' operator will 
+        reverse the desired result from the condition or expression. They are frequently used in if-else statements,
+        while loops, and boolean expressions to develop complex decision making.
+
+
 3.	What are functions in Python? When and why are they useful?
+
+       
+        Functions in Python are defined by the 'def' keyword. They are constructed as follows: the keyword, a space, the 
+        name of the function, open/closed parentheses, and a colon. They are mainly used to avoid code repetition.
+        They can take in parameters inside the parenthesis. If the values being used inside a function need to change, 
+        it's a good idea to use parameters. With parameters you can set the required values outside the function. 
+        Functions can be called anywhere else in the code and can also be assigned to variables if they return data.
+        Funtions are very useful to make code dynamic, modular, and reusable. Functions are very useful to make code
+        dynamic, modular, and reusable. Using functions improves code organization and readability by putting a name 
+        behind the encapsulated statements.
+
 
 4.	In the section for Exercise 1 in this Learning Journal, you were asked in question 3 to set
     some goals for yourself while you complete this course.  In preparation for your next mentor call, 
     make some notes on how you’ve progressed towards your goals so far.
+
+
+        I would say part of my first goal has been completed.  I seem to have learned a lot of the syntax already.
+        The tab indentation is used for identifying the scope of the code blocks. This is kind of nice cause in other 
+        languages you have to do a lot of curly braces. Python seems to be written in a way that is very straight
+        forward.

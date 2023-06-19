@@ -39,17 +39,18 @@ for recipe in recipes_list:
     elif recipe['cooking_time'] >= 10 and len(recipe['ingredients']) >= 4:
          recipe['difficulty'] = "Hard"
 
-for recipe in range(0, len(recipes_list)):
-    print("Recipe: " + recipes_list[recipe]['name'])
-    print("Cooking Time (min): " + str(recipes_list[recipe]['cooking_time']))
+    print("Recipe: " + recipe['name'])
+    print("Cooking Time (min): " + str(recipe['cooking_time']))
     print("Ingredients:")
    
-    for ingredient in recipes_list[recipe]['ingredients']:
+    for ingredient in recipe['ingredients']:
         print(ingredient)
  
-    print("Difficulty level: " + recipes_list[recipe]['difficulty'])
+    print("Difficulty level: " + recipe['difficulty'])
     print(" ")
 
+ 
+    
 ingredients_list.sort()    
 print("Ingredients Available Across All Recipes")
 print("----------------------------------------")
