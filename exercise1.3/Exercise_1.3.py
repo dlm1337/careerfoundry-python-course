@@ -8,8 +8,8 @@ def take_recipe():
     ingredients = []
    
     while True:
-        ingredient = str(input("Add ingredients OR type 'exit' to finish --> ")).lower()
-        if ingredient == "exit":
+        ingredient = str(input("Add ingredients or type 'next' to start the next recipe/or finish --> ")).lower()
+        if ingredient == "next":
             break
         else:
             ingredients.append(ingredient) 
