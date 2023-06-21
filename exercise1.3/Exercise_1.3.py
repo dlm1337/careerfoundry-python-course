@@ -6,13 +6,11 @@ def take_recipe():
     name = str(input("Enter the name of the recipe --> "))
     cooking_time = int(input("Enter the cooking time in min (ex: 30) --> "))
     ingredients = []
-   
-    while True:
-        ingredient = str(input("Add ingredients or type 'next' to start the next recipe/or finish --> ")).lower()
-        if ingredient == "next":
-            break
-        else:
-            ingredients.append(ingredient) 
+
+    ingredient_count = int(input("Enter the number of ingredients for the recipe --> "))
+    for _ in range(ingredient_count):
+        ingredient = str(input("Enter an ingredient --> ")).lower()
+        ingredients.append(ingredient) 
  
     recipe = { 'name' : name, 'cooking_time' : cooking_time, 'ingredients' : ingredients}
     return recipe
