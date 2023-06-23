@@ -8,8 +8,9 @@ Reflection Questions
 1.	Why is file storage important when you’re using Python? What would happen if you didn’t store local
 files?
 
+
     File storage is important to preserve data for later use on a local machine. These files can 
-    then be retrieved at a later date, allowing for the previous data to impact newer results if
+    then be retrieved at a later date, allowing for the previous data to impact newer results as
     needed. When working with variables from a python script, the variable data is lost when the 
     script is finished. This would limit the creativity, or usefulness, of a script if data was not
     reflected on to create functionality.
@@ -18,17 +19,59 @@ files?
 2.	In this Exercise you learned about the pickling process with the pickle.dump() method. What are 
 pickles? In which situations would you choose to use pickles and why? 
 
+    
+    Pickles in Python are a way to store data as a stream of bytes in binary files. They are 
+    particularly useful for easily storing and retrieving complex data structures, such as lists of 
+    dictionaries. Pickles preserve the original state of the objects, eliminating the need for complex 
+    parsing of text files. By using pickle.dump(), objects can be stored, and pickle.load() retrieves 
+    the objects in their original form. This allows for easy accessibility to the stored data, and 
+    enables practical functionality in Python scripts. They preserve the original object state, 
+    simplifying the use of complex data in your scripts.    
+
 
 3.	In Python, what function do you use to find out which directory you’re currently in? 
 What if you wanted to change your current working directory?
+
+
+    You would use the 'os' module to achieve this. The os.getcwd() function will locate the directory
+    that you are currently in, and return the directory path as a string. You would use os.chdir() 
+    function to change the directory you are currently working in. You may know the path to the 
+    directory on you current machine, but for locating a file on another machine you need to know 
+    the directory your currently in.  This allows for transitioning to different parts of an app, 
+    without knowing the full directory path to start. 
 
 
 4.	Imagine you’re working on a Python script and are worried there may be an error in a block of code.
 How would you approach the situation to prevent the entire script from terminating due to an error?
 
 
+    Using try-except blocks you could prevent unexpected termination of the script.  The try block
+    would be the block of code you expect to work. Then you could follow with an except block
+    to catch any unexpected results. You could setup an except block to be used for specific
+    error cases, and follow with a plain except block to catch anything else. the else block is
+    used to run statements only if the try block encounters no errors. It is a variation of the finally
+    block. The major difference between finally and else is, finally will run even if an except block is
+    hit, or a return happens before hand. If a result was returned in the try block, it would not hit 
+    the except or else blocks. The finally block would be used for any code you need to make sure runs,
+    regardless of what happens in previous blocks. To approach a Python script that feels error prone
+    I would make sure to use all of the block types previously mentioned. The try block would attepmt
+    the part of code that is error prone. I would try to identify specific except blocks like 
+    'FileNotFoundError', and have a catch all except block to ensure continuation of the script. my
+    else block would contain a return statement, or any statements that needs to be done if the
+    try block succeeds. My finally block would contain any code that needs to run no matter what.
+ 
+
 5.	You’re now more than halfway through Achievement 1! Take a moment to reflect on your learning 
 in the course so far. How is it going? What’s something you’re proud of so far? Is there something
 you’re struggling with? What do you need more practice with? Feel free to use these notes to guide
 your next mentor call. 
+
+
+    I am excited to complete half of the 1st achievement. I am becoming more comfortable with the 
+    syntax of python. I believe it is going well. I would say I am happy with my progress. I would
+    say learning about pickles has been the most interesting. They seem like a great way to store data 
+    to files and access the data later. I imagine knowledge of pickles will help to understand
+    access of databases later on in the course. I do not believe i am struggling, although it would
+    help to breifly overlook my previous work and sections. This may help me to retain the information
+    and understand the flow of the course.
 

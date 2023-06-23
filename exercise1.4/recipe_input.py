@@ -66,7 +66,7 @@ for x in range(0, user_recipe_count):
 data['recipes_list'] = recipes_list
 data['all_ingredients'] = all_ingredients
  
-with open(user_file_request, "wb") as file: 
+with open(user_file_request, "wb") as file:
     pickle.dump(data, file)
 
 print("Data has been written to " + user_file_request)

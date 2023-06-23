@@ -1,6 +1,7 @@
 import pickle
 
 def display_recipe(recipe):
+    print("-----------------------------------------")
     print("Recipe: " + recipe['name'])
     print(" ")
     print("Cooking Time (min): " + str(recipe['cooking_time']))
@@ -15,6 +16,7 @@ def display_recipe(recipe):
 
 def search_ingredient(data):
     all_ingredients = data['all_ingredients']
+    print(" ")
     print("All Ingredients:")
     for i, ingredient in enumerate(all_ingredients, 1):
         print(str(i) + ". " + ingredient)
@@ -48,11 +50,6 @@ except:
 else:
     user_file.close()
     search_ingredient(data)
-
-# data = {'recipes_list': [{'name': 'lemonade', 'cooking_time':5, 
-#         'difficulty': 'EASY', 'ingredients':['sugar', 'water', 'lemons']}],
-#         'all_ingredients': ['sugar', 'water', 'lemons']}
-# search_ingredient(data)
 
 
 

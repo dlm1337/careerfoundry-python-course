@@ -17,7 +17,7 @@ The add.py script prompts the user for 2 numbers and adds them together.
 3. In vscode activate your environment in the terminal ex: for windows powershell: cd C:\<path to your VirtualEnvs folder>\<environment name>\Scripts\
 .\Activate.ps1
 4. Write pip install -r requirements.txt
-5. Run add.py script.
+5. Run add.py script inside the directory of your script.
 
 
 ## Usage

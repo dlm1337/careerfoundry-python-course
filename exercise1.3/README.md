@@ -15,7 +15,7 @@ The Exercise_1.3.py script prompts the user for how many recipes they would like
 1. Create a virtual environment. 
 2. In vscode activate your environment in the terminal ex: for windows powershell: cd C:\<path to your VirtualEnvs folder>\<environment name>\Scripts\
 .\Activate.ps1
-3. Run Exercise_1.3.py script.
+3. Run Exercise_1.3.py script inside the directory of your script.
 
 
 ## Usage
