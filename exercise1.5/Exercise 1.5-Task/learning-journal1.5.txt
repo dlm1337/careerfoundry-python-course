@@ -1,0 +1,88 @@
+Exercise 1.5: Object-Oriented Programming in Python
+Learning Goals
+
+●	Apply object-oriented programming concepts to your Recipe app
+
+Reflection Questions
+
+1.	In your own words, what is object-oriented programming? What are the benefits of OOP?
+
+
+        The main objective of OOP programming is to avoid repeating yourself. A lot of concepts can
+        be abstacted into classes and reused later. For example: the string class(built-in class) in 
+        python is commonly used, and has a lot of code abstracted away that you do not need to see. 
+        You can just perform the class methods as needed, and using strings is a very common need. 
+        This also protects the data within an object(encapsulates), as it can only be accessed through 
+        the class methods. OOP allows for achieveing polymorphism and inheritance.  For example a base 
+        class could be a vehicle. A plane could be a child class that inherits what is common for all 
+        vehicles. If a plane inherits a method that is not completely correct for a plane, you can 
+        override the method. This is what is known as polymorphism. Polymorphism can also be as simple 
+        as having the same method in unrelated classes with different functionality. For example a plane 
+        and a vehicle both have the noise method. They make two different noises so the noise method would 
+        need to be overridden in the plane class. The benefits of applying oop concepts are infinite. 
+        Abstracting commonly used code into classes will cut out major time, and the overall size of the 
+        code base. Most concepts in OOP are based on limiting the amount of code you need to write, which 
+        can also make your code less confusing.
+
+
+2.	What are objects and classes in Python? Come up with a real-world example to illustrate how objects
+    and classes work.
+
+
+        An object is an instance of a class and an object is instantiated by the class(aka: the blue 
+        print). In python all objects are class based, and everything is an object. Some classes are 
+        pre-defined but with the infinite possibilites/needs it cannot define everything. The ability
+        to create classes is a powerful way of customizing your needs into your own objects. Classes consist
+        of attributes, methods, and class variables(shared data amongst all instantiated objects). Classes
+        inherit from either the object class, or they can inherit from a base class(a class you made that is
+        not a child class). A child class can achieve a form of polymorphism with base class methods 
+        overridden. A real world example of a class would be a cake mold. The cake mold is not the cake 
+        itself, but knows how to shape the cake. The cake mold does not always supply the ingredients, 
+        but a class is not really responsible for that either. You could use different ingredients for the 
+        cake mix or frosting. Classes can contain different data but the objects created could have many 
+        differences. Any change you make to a cake mold will be common throughout all cakes. This is the 
+        same with classes. If you change the class, all following objects will be affected. 
+
+
+3.	In your own words, write brief explanations of the following OOP concepts; 100 to 200 words per 
+    method is fine. 
+
+        Inheritance Description: 
+
+            Inheritance is the concept of using base(parent) class methods in a child class. You would
+            achieve this by adding the base class in the parameters of the child class in Python. The 
+            child class would then have access to all base class methods. It is a one way relationship
+            from parent to child, meaning it cannot be the other way around. The methods from the
+            base class do not need to be defined again in the child class. With inheritance you
+            can create hierarchies(base class relationship to many subclasses(child classes)).
+            for example: Weather is the base class. There are many types of weather such as, cloudy,
+            sunny, storming, foggy, and raining. They would all share certain characteristics such as
+            tempature and humidity, which you could establish in the base class(Weather).
+
+        Polymorphism Description:
+
+            Polymorphic behavior is the achieved in Python through having the same method name used in
+            different classes. Having the same name of a method for different classes is not a problem.
+            These methods can perform different operations. Another form of polymorphism is overriding
+            a base classes implementation of a method. This is as simple as redefining the same method
+            in a child class. Polymorphism follows the do not repeat yourself principles. You no longer
+            have to name everything individually. For example: A plane and a helicopter both fly. It 
+            would be a pain to have to come up with another word for fly, because a plane is already
+            using it as a method. Plus odds are fly would be the same code in both methods for the plane
+            and helicopter. Overall polymorphism is great for code reuse and the ability to change
+            the same method across classes as needed.
+
+        Operator Overloading Description:
+
+            Operator overloading is the process of assigning common operator use in class methods. In 
+            python you can define what to do if operations are performed on your objects. You would do 
+            this by assigning a method name, with a keyword from python, in the class. For example: 
+            'def __<<Python reserved keyword such as 'gt'(greater than)>>__()'. Now you can write 
+            statements in the method to perform what you would expect is a specific operator was used. 
+            In a custom defined class the compiler is unaware of what to do with basic operations such
+            as: +, -, >, <, >=, <=, !=, __str__(), __add__(), __sub__(). The last three operators are 
+            python reservered keywords for string representation, addition, and subtraction. Operator 
+            overloading is another 'DRY' principle that allows for code reuse and customization. 
+            Operator overloading is a powerful way to make your class objects flexible and customized 
+            to your needs.    
+

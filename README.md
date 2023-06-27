@@ -14,6 +14,9 @@ This repository contains exercises and scripts for the CareerFoundry Python cour
 - [Exercise_1.4](#exercise_14)
   - [Installation](#exercise_14-installation)
   - [Usage](#exercise_14-usage)
+- [Exercise_1.5](#exercise_15)
+  - [Installation](#exercise_15-installation)
+  - [Usage](#exercise_15-usage)
 - [Authors](#authors)
 - [Acknowledgments](#acknowledgments)
  
@@ -109,6 +112,34 @@ To install and run the scripts, follow these steps:
 
 - When running the `recipe_input.py` script, you will be prompted to input a file name (`.bin` file). If the file is not found, it will create a new file with the given name and start from scratch. You will then be asked how many recipes to add, followed by the details of each recipe (name, cooking time, ingredients). The difficulty of each recipe will be determined based on its data.
 - When running the `recipe_search.py` script, you will be asked to provide the binary file name. The script will list all current ingredients in the binary file along with their associated numbers. You can enter a number to display all recipes that contain the corresponding ingredient.
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+
+## Exercise_1.5
+
+The `recipe_oop.py` script has created a class to create and manipulate Recipe objects. 
+
+------------------------------------------------------------------------------------------------------------------------
+
+### Exercise_1.5-Installation
+
+To install and run the scripts, follow these steps:
+
+1. Ensure you have Python 3.8.7
+2. Create a virtual environment for the script (`recipe_oop.py`).
+3. Activate the virtual environments in the terminal.
+4. Run the `recipe_oop.py` script. 
+6. Some basic operations are already creating Recipe objects to test the class functionality.
+
+------------------------------------------------------------------------------------------------------------------------
+
+### Exercise_1.5-Usage
+
+- When running the `recipe_oop.py` you can perform basic operations to the objects created by the Recipe class. You can set all the properties at the object creation(name, cooking time, ingredients),
+and difficulty will be set automatically. You can come back and change these properties later if you
+would like with the custom getter and setter methods. It will also recalculate difficulty if cooking time, or ingredients are changed. You can add more ingredients to the objects later on, and there is a class variable that will store unique ingredients accross all objects. You can also preform a search based on a specific ingredient with the recipe_search method inside the class. The recipe_search method
+will search through a provided list of Recipe objects, and you must provide a keyword as well to search for. If cooking time and/or ingredients are left out the object should still be created, and have the ability to add these properties later. This is thanks to the try/catch blocks.
 
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
