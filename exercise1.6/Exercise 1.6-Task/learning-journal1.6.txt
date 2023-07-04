@@ -1,0 +1,83 @@
+Exercise 1.6: Connecting to Databases in Python
+
+Learning Goals
+
+●	Create a MySQL database for your Recipe app
+
+Reflection Questions
+
+1.	What are databases and what are the advantages of using them?
+
+
+        Using a database allows you to store data and access it at another time. It is then 
+        manageable through sql statements, where you can perform C.R.U.D operations. The
+        databases can be accessed from other locations or systems. Having a centralized data
+        storage allows for manipulation from different users, and the changes are implemented 
+        everywhere. This eleminates the need to store the data in multiple places, or to have to
+        update it everywhere when one user changes something. Database allow for strict access
+        so you can control who can make changes, or what changes are allowed from the
+        application. Databases allow for cross platform access other than Pyhton, because of its 
+        standardized format. The format allows for data integrity, making sure data conforms
+        to requirements. The access to a database is concurrent which avoids conflicts between
+        multiple users. There are also scalabilty options to ensure performance is consistent as 
+        user demand and the amount of data grows.
+
+
+2.	List 3 data types that can be used in MySQL and describe them briefly:
+
+
+        Data type        Definition
+
+        INT             This is used for numbers without decimals. Used a lot for IDs(primary key, 
+                        foreign key).
+
+        VARCHAR         This is used for storing strings with a set maximum length.
+
+
+        DATE            This is used for storing dates in a universal format(yyyy-mm-dd).
+	
+	
+3.	 In what situations would SQLite be a better choice than MySQL?
+
+
+         SQLite is a good choice over MySQL in several situations. It is lightweight and operates 
+         without the need for a running server, making it great for fastly iterating and testing code. 
+         SQLite's serverless(embedded in the code) aspect allows for faster testing and debugging, 
+         especially during early development. When using smaller amounts of data, SQLite's simplistic 
+         nature and ease of setup make it a very viable option. It is often preferred for small 
+         applications and is commonly used in mobile development, due to its lightweight properties. 
+         However, it's important to consider scalability and concurrent access requirements. This is 
+         because SQLite is not good for managing massive amounts of data, or many users connected at 
+         the same time. Overall, SQLite is very useful due to its lightweight nature, simplicity, and 
+         suitability for smaller applications.
+
+
+4.	Think back to what you learned in the Immersion course. What do you think about the differences 
+    between JavaScript and Python as programming languages?
+
+
+        Python is a frontend/backend language more often, while javascript is for the frontend 
+        most of the time. Javascript runs in the browser, and is used for asynchronous requests across 
+        servers. Javascript can be used to perform backend operations with node.js(allows for server 
+        side scripting). Javascript is used to make user interfaces dynamic and good for handling 
+        validation on the client side. Javscript has many frameworks to assist with frontend 
+        development such as Angular, Vue.js, and React. Python is great for data manipulation
+        and working with a database. Python can use the Flask framework to handle frontend logic.
+        Python is well known for its powerful machine learning capabilites. Python is mostly used 
+        for backend operations, but neither languages are locked in to any particular role. Both 
+        languages have great features and it really comes down to the developer preference. I would 
+        recommend using both languages together to have versatile options. 
+
+
+5.	Now that you’re nearly at the end of Achievement 1, consider what you know about Python so far. 
+    What would you say are the limitations of Python as a programming language?
+
+        
+        Python is an interpreted language which can be slower than a compiled language. Mobile 
+        development options are not as far along as some other languages. Python can use
+        more memory than other languages. I have heard Python can struggle more so than 
+        some other languages with multithreading(performing multiple tasks concurrently), due to the 
+        global interpreter lock. Packaging can be complex although pip and virtual environments
+        can help with this. Most of the issues with Python can be worked around, and the limitations 
+        are far outweighed by the benefits of a large community and resources available. Also, it is 
+        about the easiest to read language I have seen.

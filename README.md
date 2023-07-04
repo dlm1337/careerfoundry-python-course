@@ -17,6 +17,9 @@ This repository contains exercises and scripts for the CareerFoundry Python cour
 - [Exercise_1.5](#exercise_15)
   - [Installation](#exercise_15-installation)
   - [Usage](#exercise_15-usage)
+- [Exercise_1.6](#exercise_16)
+  - [Installation](#exercise_16-installation)
+  - [Usage](#exercise_16-usage)
 - [Authors](#authors)
 - [Acknowledgments](#acknowledgments)
  
@@ -140,6 +143,32 @@ To install and run the scripts, follow these steps:
 and difficulty will be set automatically. You can come back and change these properties later if you
 would like with the custom getter and setter methods. It will also recalculate difficulty if cooking time, or ingredients are changed. You can add more ingredients to the objects later on, and there is a class variable that will store unique ingredients accross all objects. You can also preform a search based on a specific ingredient with the recipe_search method inside the class. The recipe_search method
 will search through a provided list of Recipe objects, and you must provide a keyword as well to search for. If cooking time and/or ingredients are left out the object should still be created, and have the ability to add these properties later. This is thanks to the try/catch blocks.
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+
+## Exercise_1.6
+
+The `recipe_mysql.py` script allows the user to create and manipulate recipes in a continuous flow, until the user is ready to quit.
+
+------------------------------------------------------------------------------------------------------------------------
+
+### Exercise_1.6-Installation
+
+To install and run the scripts, follow these steps:
+
+1. Ensure you have Python 3.8.7
+2. Create a virtual environment for the script (`recipe_mysql.py`).
+3. Activate the virtual environments in the terminal.
+4. Run the `recipe_mysql.py` script. 
+6. Perform operations in the terminal choosing from 5 choices.
+7. type quit in the main menu to stop the script from running.
+
+------------------------------------------------------------------------------------------------------------------------
+
+### Exercise_1.6-Usage
+
+- When running the `recipe_mysql.py` you are brought to the main menu in the terminal. You can choose from 5 options to perform C.R.U.D operations on your Recipe database. The Recipe database will be created if not already on the system. The program will loop until you are done manipulating recipe data by typing quit in the main menu.  
 
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
