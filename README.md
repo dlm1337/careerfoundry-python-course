@@ -20,6 +20,9 @@ This repository contains exercises and scripts for the CareerFoundry Python cour
 - [Exercise_1.6](#exercise_16)
   - [Installation](#exercise_16-installation)
   - [Usage](#exercise_16-usage)
+- [Exercise_1.7](#exercise_17)
+  - [Installation](#exercise_17-installation)
+  - [Usage](#exercise_17-usage)
 - [Authors](#authors)
 - [Acknowledgments](#acknowledgments)
  
@@ -161,14 +164,42 @@ To install and run the scripts, follow these steps:
 2. Create a virtual environment for the script (`recipe_mysql.py`).
 3. Activate the virtual environments in the terminal.
 4. Run the `recipe_mysql.py` script. 
-6. Perform operations in the terminal choosing from 5 choices.
-7. type quit in the main menu to stop the script from running.
+5. Perform operations in the terminal choosing from 5 choices.
+6. Type quit in the main menu to stop the script from running.
 
 ------------------------------------------------------------------------------------------------------------------------
 
 ### Exercise_1.6-Usage
 
-- When running the `recipe_mysql.py` you are brought to the main menu in the terminal. You can choose from 5 options to perform C.R.U.D operations on your Recipe database. The Recipe database will be created if not already on the system. The program will loop until you are done manipulating recipe data by typing quit in the main menu.  
+- When running the `recipe_mysql.py` you are brought to the main menu in the terminal. You can choose from 5 options to perform C.R.U.D operations on your Recipe table. The Recipe table will be created if not already on the system. The program will loop until you are done by typing quit in the main menu.  
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+
+## Exercise_1.7
+
+The `recipe_app.py` script imports the `recipe_class.py` which is using an orm sqlalchemy and a mysql db. The app allows for creating and manipulating recipes as you would desire, through a main menu.
+
+------------------------------------------------------------------------------------------------------------------------
+
+### Exercise_1.7-Installation
+
+To install and run the scripts, follow these steps:
+
+1. Ensure you have Python 3.8.7
+2. Create a virtual environment for the script (`recipe_app.py`).
+3. Activate the virtual environments in the terminal.
+4. pip install sqlalchemy, pip install mysqlclient in terminal.
+5. Customize the create_engine to accept your database url.
+6. Run the `recipe_app.py` script. 
+7. Perform operations in the terminal choosing from 6 choices.
+8. Type quit in the main menu to stop the script from running.
+
+------------------------------------------------------------------------------------------------------------------------
+
+### Exercise_1.7-Usage
+
+- When running the `recipe_app.py` you are brought to the main menu in the terminal. You can choose from 6 options to perform C.R.U.D operations on your Recipe table. You can add, change, or delete recipes. You can also look up all the recipes or search by ingredients. The Recipe table will be created if not already on the system by the O.R.M(sqlalchemy) using the Recipe class model. The program will loop until you are done by typing quit in the main menu.  
 
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
