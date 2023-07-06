@@ -330,7 +330,13 @@ def main_menu(choice):
             if choice != 'quit':
                 print('The input was invalid.')
 
-main_menu(choice)
+try:
+    main_menu(choice)
+    session.close()
+except Exception as e:
+        print('Unexpected Error: ', str(e))
+finally:
+    session.close()
 
 
 
