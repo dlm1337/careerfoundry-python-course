@@ -23,6 +23,8 @@ This repository contains exercises and scripts for the CareerFoundry Python cour
 - [Exercise_1.7](#exercise_17)
   - [Installation](#exercise_17-installation)
   - [Usage](#exercise_17-usage)
+- [Exercise_2.1](#exercise_21)
+  - [Process](#exercise_21-process)
 - [Authors](#authors)
 - [Acknowledgments](#acknowledgments)
  
@@ -200,6 +202,22 @@ To install and run the scripts, follow these steps:
 ### Exercise_1.7-Usage
 
 - When running the `recipe_app.py` you are brought to the main menu in the terminal. You can choose from 6 options to perform C.R.U.D operations on your Recipe table. You can add, change, or delete recipes. You can also look up all the recipes or search by ingredients. The Recipe table will be created if not already on the system by the O.R.M(sqlalchemy) using the Recipe class model. The program will loop until you are done by typing quit in the main menu.  
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+
+## Exercise_2.1
+
+This task involved researching Django's benefits, drawbacks, and where the framework is used by well known companies.
+
+------------------------------------------------------------------------------------------------------------------------
+
+### Exercise_2.1-Process
+
+- The exercise involved researching companies that use django and why.
+- It required deciding what cases you should use Django and when maybe you should consider another path.
+- It went through the process of checking the Python version installed on my pc, making a virtual environment, checking if the virtual environment was installed, and installing the Django framework.
+- It also involved researching why the framework is popular and widely used.
 
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------

@@ -12,12 +12,43 @@ Reflection Questions
     or a framework like Django instead. What are the advantages and drawbacks of each?
 
 
+        The advantages of vanilla Python would be the freedom to control every detail of the application. If you wanted
+        processes like security and user authentication to happen a particular way, then vanilla would be the way to go.
+        vanilla Python could be more flexible and to the point, leaving out the bulk of built-in framework features.
+        Vanilla Python could give you a much better learning experience, and deeper understanding of the language. The
+        drawbacks however would be a larger development process, and having to handle so many things that are abstracted
+        away in a framwork like Django. The design pattern would have to be from scratch, and would therefore be harder
+        to manage a consistent structure. Overall, this would probably be a better route if you need a lightweight
+        application, and really have the time to think out how you will structure/authenticate/secure your app.
+
+        The advantages of using the Django framework are mainly focused around development speed, as well as
+        organized code and reusable modular components. Django is designed to abstract a lot of hastle away with things
+        such as user authentication, security features, and controller logic. It has a huge community and great documentation.
+        It also has many libraries and is well maintained making accomplishing tasks easier. Django is designed to be highly
+        scalable and highly adaptable to new situations. Component based structure makes code loosely coupled and easy
+        to update, withought affecting existing features. You can achieve a high level of complexity in minimal time
+        with Django. Some drawbacks however, depending on who you ask, is the abstracting away of certain thing that
+        may need to be customized. Having to adhere to Djangos specific design pattern can be problematic to some situations.
+        This would most likely not be a problem for most use cases. Only for edge cases of app needs would it be an issue. 
+        It may be bulkier that some people want, who know the core of python well. They may want something lightweight 
+        and the ability to establish a customized/minimal design pattern.
+
 
 2.	In your own words, what is the most significant advantage of Model View Template (MVT) architecture over Model View 
     Controller (MVC) architecture?
 
-    
 
+        Loosely coupled components and separation of concerns is probably the most dominant advantage. This allows for
+        work by many developers without much concern for overlapping or coding conflicts. It is easier to have 
+        people focused in different areas and seamless intergration of there code. Changes can be made to the model
+        without affecting the view, or changes to the template can be made without affecting the buisness logic/view
+        (and so on). The abstraction of controller logic seems like a pretty big advantage as well. This allows for
+        more focus on the application's other needs, such as the presentation layer or buisness logic. Request
+        handling and url routing can take up quite a bit of time, and is easly handled in the view with built-in Django
+        features. Overall, MVT is great for streamlining development, applying D.R.Y principles, collaborating with other
+        developers, and making modular/reusable components.
+
+    
 3.	Now that you’ve had an introduction to the Django framework, write down three goals you have for yourself and your 
     learning process during this Achievement. You can reflect on the following questions if it helps:
 
@@ -25,7 +56,23 @@ Reflection Questions
 ●	What do you want to learn about Django? 
 
 
+        I am very interested in most aspects of it at this time. It seems very powerful and i would like to see
+        the security/authentication features, as well as what it is doing to simplify controller logic in the
+        view.
+
+
 ●	What do you want to get out of this Achievement? 
 
 
+        I would like to be able to apply what i've learned to expand my portfolio. Doing so with simple/deployable
+        applications built with the Django framework/Python. They seem like powerful tools for building a better
+        portfolio and showing off your skills as a developer.
+
+
 ●	Where or what do you see yourself working on after you complete this Achievement?
+
+
+        After this achievement I will be working on my resume, portfolio site, and applications(linked-in/
+        Indeed/etc). I will also apply my new skills to developing sample applications, that can be visited
+        through my portfolio. I am hoping applying my newly aquired skills to sample projects, will aid in 
+        the job search.
