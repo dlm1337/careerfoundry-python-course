@@ -1,0 +1,99 @@
+Exercise 2.2: Django Project Set Up
+
+Learning Goals
+
+●	Describe the basic structure of a Django project 
+●	Summarize the difference between projects and apps
+●	Create a Django project and run it locally
+●	Create a superuser for a Django web application
+
+Reflection Questions
+
+1.	Suppose you’re in an interview. The interviewer gives you their company’s website as an example, asking you to 
+    convert the website and its different parts into Django terms. How would you proceed? For this question, you 
+    can think about your dream company and look at their website for reference. 
+    (Hint: In the Exercise, you saw the example of the CareerFoundry website in the Project and Apps section.)
+
+
+        I will imagine I am at a job interview for youTube:
+
+            I would make a Django project named 'youTube' which includes the following 12 apps:
+
+            Video App : Would be used for video content display, video database storage, and interaction with the 
+            videos. It would include the following types of videos: sports, movies/tv, learning, fashion, games,
+            podcasts, and news.
+ 
+            Shorts Video App : Would be used for shorts video content, shorts video storage, and interaction with 
+            the shorts videos.
+ 
+            Live App: Would be used for live streamed content and interaction with the live streams.
+
+            Trending App: This would handle content that is viewed frequently by users, and populate the trending
+            page with content.
+
+            Games App: This would be responsible for the games playable on youtube, as well as all interactions with
+            the games. It would also be responsible for storing game data to the database. It would display games, 
+            as well as game videos.
+
+            Store App: Would handle purchase of content, and storing purchasable data to the database.
+
+            Library App : Would handle video history related to a user, and store data to populate this page
+            with previously explored content. It would also be responsible for watch later content/liked content.
+
+            Login App : Would be used for user login, registering users, managing accounts, authentication, and storing
+            user information to the database.
+
+            Video Comments App : This would handle the user comments associated with videos, as well as storing the
+            comments.
+
+            Channels App : This would be for channel creation and modification by the user, and it would store data
+            about the channels to the database.
+            
+            Subscriptions App: This would handle user subscribed channels and notifications about the channels, as 
+            well as storing data about a users subscriptions. 
+
+            Video Suggestion App: This would store data about the videos viewed by the user to the database. It would 
+            be responsible for generating content in the main page related to what the user has viewed.
+
+            The configuration folder named 'youtube' contains database details, admin settings, 
+            available apps, static urls, globaly used commands, routing to all apps/admin/other urls,
+            and other built in features. Most of these configurations will be in the settings.py/urls.py.
+            All apps will containt a table in the database and interact with other apps for data 
+            comparison/access. All apps will have interactions with all other apps as needed. All apps
+            will have access to configuration files and the database as well(table generation per 
+            app in each apps model).    
+
+
+
+
+2.	In your own words, describe the steps you would take to deploy a basic Django application locally on your 
+    system. 
+
+
+        First, I would make a new virtual environment named something related to the new project. I would Activate
+        the virtual environment(navigation to the environment with .\Activate.ps1 added to the end of the Scripts 
+        folder in poweshell for example). I would then run the command '-m pip install Django' in my activated virtual 
+        environment from the terminal. I would then navigate to the folder where i want to build my Django project,
+        and run the command 'django-admin.exe startproject <new project name>'. Then changing the outer folder of the
+        project structure to 'src' to spare confusion. Next step would be to run 'python manage.py createsuperuser' 
+        to create the admin by filling out the information required. Leave username blank for it to be the machine 
+        username. After that add email and password to the required information. Then I would run the command 'py 
+        manage.py migrate', to create the database, which is sqlite by default(this can be changed). Future changes
+        to the model require running migrations to apply changes to the database. 'py manage.py runserver' command 
+        will start up the server locally. Go to the url that pops up on the terminal. You can add admin to the
+        end of the url to access site administration. 
+
+
+3.	Do some research about the Django admin site and write down how you’d use it during your web application 
+    development.
+
+
+            Registering models would be important for observing data relationships. You can customize which
+            fields can be viewed, add filters, cusomized what can be searched, and create a custom interface 
+            for the models. Admin works hand in hand with the built-in authentication features. You can set 
+            access and permissions for other authorized users. You can perform C.R.U.D operations on registered
+            models. Admin allows for doing customized data operations and adding new columns or filters. 
+            You can design custom views for admins as well. Admin has built-in international translation for
+            easier representation globally. Admin has access to many 3rd part packages to customize your 
+            admin site how you need it to be. There are also built in python security features for common
+            web threats.

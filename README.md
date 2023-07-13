@@ -25,6 +25,8 @@ This repository contains exercises and scripts for the CareerFoundry Python cour
   - [Usage](#exercise_17-usage)
 - [Exercise_2.1](#exercise_21)
   - [Process](#exercise_21-process)
+- [Exercise_2.2](#exercise_22)
+  - [Process](#exercise_22-process)
 - [Authors](#authors)
 - [Acknowledgments](#acknowledgments)
  
@@ -221,6 +223,23 @@ This task involved researching Django's benefits, drawbacks, and where the frame
 
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+
+## Exercise_2.2
+
+This task involved learning how to structure Django projects, migrate database tables, run projects locally, and load admin features.
+
+------------------------------------------------------------------------------------------------------------------------
+
+### Exercise_2.2-Process
+
+- Started a Recipe App project with configuration files.
+- Created a super user.
+- Migrated to update the database.
+- Ran the server locally for the new project and checked out the admin page.
+- Learned terms related to django projects, mainly the difference between project application and app modules in the project application.
+- Also looked over configuration files such as the urls.py for routing, settings.py for database access/admin settings/globals/etc.
 
 ## Authors
 
