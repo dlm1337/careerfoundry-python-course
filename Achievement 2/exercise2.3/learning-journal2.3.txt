@@ -1,0 +1,46 @@
+Exercise 2.3: Django Models
+
+Learning Goals
+
+●	Discuss Django models, the “M” part of Django’s MVT architecture
+●	Create apps and models representing different parts of your web application 
+●	Write and run automated tests
+
+Reflection Questions
+
+1.	Do some research on Django models. In your own words, write down how Django models work and what 
+    their benefits are.
+
+
+        Django models are part of the Model/View/Template architecture. It abstacts away a lot of the 
+        query logic, and gives you object oriented style commands to interact with the database. That 
+        way you can use python code rather than writing sql queries. In the model the database structure
+        is established and provides the schema for the database. To define a model you inherit the
+        'django.db.models.Model' inside of your class. Then, you add the attributes specific to the
+        type of data you need for each. You can also set up constraints such as maximum length or
+        not null, and control validations to provide security. The migration process makes the tables, 
+        and allows you to keep track of changes to the database. Django migration allows for easy 
+        database updates, and provides version control. After the models are created you can create model
+        objects to easily manipulate the data without writing sql queries. Django allows for different 
+        types of relationships between models. You can use foreign keys(one-to many relationship), 
+        many-to-many fields for multiple relationships both ways, and there are other options for data 
+        relationships as well.
+
+
+2.	In your own words, explain why it is crucial to write test cases from the beginning of a project. 
+    You can take an example project to explain your answer.
+
+
+        I believe it is important to test your code early on, because it sets guidlines that should
+        be followed. There should be many tests in all areas possible. This ensures that any changes
+        made in the future will have the tests as indicators. This would mean that the tests
+        breaking/failing is a good indicator you made some unexpected changes that have affected other
+        areas of the project. Code should be thoroughly tested in ways that ensure you are getting
+        expected results from your models, methods, functions, etc. If you build a large project
+        without worrying about testing, it is likely you will break it eventually without any
+        indication as to why. Writing code can help you find many bugs as well. It enforces guidlines
+        for correctness and robust structure. It also acts as executable documentation of the code you 
+        write. Overall, testing minimizes the chance of unexpected behavior/bugs, and ensures good
+        coding practices that set guidlines as executable documentation.
+
+

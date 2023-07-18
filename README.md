@@ -27,6 +27,9 @@ This repository contains exercises and scripts for the CareerFoundry Python cour
   - [Process](#exercise_21-process)
 - [Exercise_2.2](#exercise_22)
   - [Process](#exercise_22-process)
+- [Exercise_2.3](#exercise_23)
+  - [Installation](#exercise_23-installation)
+  - [Usage](#exercise_23-usage)
 - [Authors](#authors)
 - [Acknowledgments](#acknowledgments)
  
@@ -223,8 +226,7 @@ This task involved researching Django's benefits, drawbacks, and where the frame
 
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------- 
 
 ## Exercise_2.2
 
@@ -241,6 +243,37 @@ This task involved learning how to structure Django projects, migrate database t
 - Learned terms related to django projects, mainly the difference between project application and app modules in the project application.
 - Also looked over configuration files such as the urls.py for routing, settings.py for database access/admin settings/globals/etc.
 
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+
+## Exercise_2.3
+
+Created models for the Recipe App that can be interacted with on the admin url.
+
+------------------------------------------------------------------------------------------------------------------------
+
+### Exercise_2.3-Installation
+
+To install and run the scripts, follow these steps:
+
+1. Ensure you have Python 3.8.7
+2. Create a virtual environment.
+3. Activate the virtual environments in the terminal.
+4. navigate to A2_Recipe_App\src
+5. Install django
+6. make migrations.
+7. migrate.
+8. make superuser.
+9. run server.
+10. add /admin to end up url.
+
+------------------------------------------------------------------------------------------------------------------------
+
+### Exercise_2.3-Usage
+
+- When you go to the admin site you can create recipes and add all the ingredients. I tried to add all the fields that will be needed as a base. I broke down the project into 5 apps(ingredient, recipe, recipeingredient, recipeingredientintermediary, user). There are data relationships connecting all of the models created. The recipeingredientintermediary was necessary to associate ingredients with individual recipes, without the recipes adding all ingredients for all recipes. The recipeingredientintermediary connects a many to many relationship between recipe and recipeingredient, allowing each individual recipe to only contain the ingredients that are associated with it.
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 ## Authors
 
 David McNeill
