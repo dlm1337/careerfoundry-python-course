@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div class="row" style="width: 100%; height: 140px;">
+        <header>
+            <nav class="navbar navbar-expand-lg justify-content-center mt-4">
+                <div class="col-4">
+                    <img class="img-fluid" style="width:210px; pointer-events: none;"
+                        src="../../static/images/tomato-g820ca7bb9_640.png">
+                </div>
+                <div class="col-2"></div>
+                <div class="col-6">
+
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <form class="form-inline">
+                                <input class="form-control mr-2" type="text" name="ingredient"
+                                    placeholder="Search by Ingredient">
+                                <button class="btn btn-primary" type="submit">Search</button>
+                            </form>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link list-button" href="#" style="color:rgb(39, 146, 35)">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link list-button" href="#" style="color: rgb(39, 146, 35)">Sign Up</a>
+                        </li>
+
+                    </ul>
+                </div>
+
+
+            </nav>
+
+        </header>
+    </div>
+
+
+    <div class="row" style="width: 100%">
+
+        <div class="col-3"></div>
+        <div class="col-9">
+            <main>
+                <section class="container">
+                </section>
+
+            </main>
+        </div>
+
+
+    </div>
+
+    <div class="row" style="width: 100%;">
+
+        <footer>
+            <nav class="navbar navbar-expand-lg justify-content-center mt-4">
+                <div class="col-2">
+                    <div class="container text-center">
+                        <p>2023 Recipe App.</p>
+                    </div>
+                </div>
+                <div class="col-8"></div>
+                <div class="col-2">
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link list-button" href="#"
+                                style="color:rgb(39, 146, 35)">About</a></li>
+                        <li class="nav-item"><a class="nav-link list-button" href="#"
+                                style="color:rgb(39, 146, 35)">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </footer>
+    </div>
+
+
+    <div class="left-navigation">
+        <ul>
+            <li><button class="btn btn-primary left-nav-button" type="submit">Home</button>
+            </li>
+            <li><button class="btn btn-primary left-nav-button" type="submit">Create</button></li>
+            <li><button class="btn btn-primary left-nav-button" type="submit">Edit</button></li>
+        </ul>
+    </div>
+
+
+</body>
+
+</html>
