@@ -75,7 +75,7 @@ Reflection Questions
     views, and why?
 
 
-        While both are great to use for certain situations, class-based views would most likely be the better choices
+        While both are great to use for certain situations, class-based views would most likely be the better choice
         for large scale projects. A lot of times templates will need to re-render the same sections for new templates,
         and class-based allows for OOP design benefits. Inheriting a base class with a lot of reused functionality, 
         can be very useful when needing new templates with only slight differences. Encapsulating view functionalities 
