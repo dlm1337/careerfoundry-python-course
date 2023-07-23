@@ -29,29 +29,17 @@ header {
     top: 0;
     left: 0;
     right: 0;
-    /* Set the right property to 0 to make the header span the entire viewport width */
     height: 140px;
-    background: linear-gradient(to bottom, rgba(41, 38, 34, 0.342), rgba(0, 0, 0, 0.342));
+    background: linear-gradient(to bottom, rgba(41, 38, 34, 0.302), rgba(0, 0, 0, 0.302));
     color: #fff;
-    border-bottom: 3px solid linear-gradient(to bottom, rgba(41, 38, 34, 0.799), rgba(0, 0, 0, 0.799));
+    border-bottom: 1px solid rgba(156, 150, 150, 0.849);
     text-align: center;
-}
-
-nav ul {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
 }
 
 nav form {
     display: flex;
     align-items: center;
     gap: 1rem;
-}
-
-nav li {
-    margin-right: 1rem;
 }
 
 main {
@@ -66,56 +54,28 @@ main {
       at  - https://pixabay.com/photos/vegetables-pot-cooking-ingredients-1006694/ */
 }
 
-.recipe-cards {
-    margin-top: 8px;
-}
-
-.search-by-ingredient {
-    text-align: center;
-    margin-top: 2rem;
-}
-
-.search-by-ingredient input {
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.search-by-ingredient button {
-    padding: 0.5rem 1rem;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
 footer {
     position: relative;
-    background: linear-gradient(to bottom, rgba(41, 38, 34, 0.342), rgba(0, 0, 0, 0.342));
-    border-top: 3px solid linear-gradient(to bottom, rgba(41, 38, 34, 0.799), rgba(0, 0, 0, 0.799));
+    background: linear-gradient(to bottom, rgba(41, 38, 34, 0.302), rgba(0, 0, 0, 0.302));
+    border-top: 1px solid rgba(156, 150, 150, 0.849);
     color: #fff;
     padding: 1rem;
     text-align: center;
     height: 100px;
 }
 
-footer a.btn {
-    margin: 0 5px;
-}
-
 .left-navigation {
-    left: 6px;
-    top: 34%;
     position: fixed;
+    min-width: 212px;
+    left: 6px;
+    top: 32%;
     color: #fff;
+    border-right: 3px solid rgba(156, 150, 150, 0.849);
 }
 
 .left-navigation li {
     font-size: large;
-    margin-bottom: 3rem;
-    background-color: rgba(175, 141, 99, 0.815);
-    height: 46px;
+    margin-bottom: 2rem;
     text-align: center;
     align-items: center;
     justify-content: center;
@@ -128,17 +88,13 @@ footer a.btn {
     height: 100%;
 }
 
-.left-navigation a {
-    text-decoration: none;
-    color: #fff;
-}
-
-/* Image free for non-profit use. Made a logo.
-     from - Nile
-      at  - https://pixabay.com/photos/tomato-parsley-pepper-peppercorns-663097/ */
 .logo {
     text-align: left;
     justify-content: left;
+
+    /* Image free for non-profit use. Made a logo.
+     from - Nile
+      at  - https://pixabay.com/photos/tomato-parsley-pepper-peppercorns-663097/ */
 }
 
 :root {
@@ -158,12 +114,11 @@ footer a.btn {
 
 }
 
-.list-button {
-    border: 2px solid white;
-    border-radius: 4px;
+.recipe-card {
+    margin: 3px;
+    padding: 3px;
 }
 
-.list-button:hover {
-
-    background-color: rgb(255, 255, 255);
+.d-none {
+    display: none;
 }

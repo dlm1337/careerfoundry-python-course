@@ -1,0 +1,134 @@
+Exercise 2.4: Django Views and Templates
+
+Learning Goals
+
+●	Summarize the process of creating views, templates, and URLs 
+●	Explain how the “V” and “T” parts of MVT architecture work
+●	Create a frontend page for your web application
+
+Reflection Questions
+
+1.	Do some research on Django views. In your own words, use an example to explain how Django views work.
+
+
+        Django views are Python functions or classes, designed for handling HTTP requests and sending responses. 
+        In the Model-View-Template structure, views import app models and display data as needed for templates. 
+        You can define data models through a Django ORM to have data passed to your view, or you can retrieve data 
+        from the user to use in the template rendering(project level file urls.py - retrieved through the paths in the 
+        url patterns). The retrieved data is then passed to the template through a dictionary. Django has its own syntax 
+        to implant data from the view into the template. When a user accesses the corresponding URL, Django calls the 
+        view function, retrieves data from the database/or came with the response, and passes it to the template. Any 
+        type of request that is sent to a view is rendered, and sent as a HTTP response to the user's browser. This 
+        displays the requested information to the users browser, from the database added to a template/just another 
+        template by itself.
+
+    
+    {1.} Example of implementing data from user : 
+            # urls.py at project level
+
+            from django.urls import path
+            from . import views
+
+            urlpatterns = [
+                path('display_height/<str:height>/', views.display_height_view, height='6'2'),
+            ]
+
+       
+        {2.} Recieving the data from the user in the view:
+            # views.py
+
+            from django.shortcuts import render
+
+            def display_height_view(request, height):
+                height_statement_message = f"Wow you are pretty tall at {height}."
+                context = {
+                    'height_statement': height_statement_message,
+                }
+                return render(request, 'display_height.html', context)
+
+   
+    
+    {3.} Example getting data from database for view:
+
+        from django.shortcuts import render
+        from .models import Recipe
+
+        def Recipe_list(request):
+            recipes = Recipe.objects.all()
+            return render(request, 'recipe_list.html', {'recipes': recipes})
+
+       
+        {4.} And in html you can display all recipes now:
+
+                <body>
+                    <h1>Recipe List</h1>
+                    <ul>
+                        {% for recipe in recipes %}
+                        <li>{{ recipe.title }} - ${{ recipe.description }}</li>
+                        {% endfor %}
+                    </ul>
+                </body>
+
+
+2.	Imagine you’re working on a Django web development project, and you anticipate that you’ll have to reuse lots 
+    of code in various parts of the project. In this scenario, will you use Django function-based views or class-based 
+    views, and why?
+
+
+        While both are great to use for certain situations, class-based views would most likely be the better choices
+        for large scale projects. A lot of times templates will need to re-render the same sections for new templates,
+        and class-based allows for OOP design benefits. Inheriting a base class with a lot of reused functionality, 
+        can be very useful when needing new templates with only slight differences. Encapsulating view functionalities 
+        in a base class allows for code re-use and easy modifications(polymorphism in a child class of a view request
+        handler - for example). Organization can be achieved much easier when making views class based. Class-based
+        alse allows for mix-ins, which are like reusable parts, that can be mixed together to create new views.
+        There are also built in class-based views, that are provided by Django to handle common tasks. Function-based
+        views are great for a quick approach, or smaller application, but will get cluttered over time. If
+        you have a large scale project that requires major code re-use go with class-based views. You will have 
+        organization, inheritance, polymorphism, encapsulation, mixins, and built-in Django views to make life
+        easier.
+
+
+ 3.	 Read Django’s documentation on the Django template language and make some notes on its basics.
+
+        1. Wrap variable in double curly braces to display in the template. ex: {{ variable_name }}
+        2. Tags are used for logical operations. ex: <ul> 
+                                                        {% for recipe in recipes %}
+                                                         <li> {{ recipe }} </li> 
+                                                        {% endfor %}
+                                                     </ul>
+                                                        ***you then could do if block if for loop condition is not met.
+                                                        ***ex: if, elif, else.
+                                                       ex: {% else %}
+                                                                <p> No recipes available. </p>
+                                                           {% endif %}
+
+        3. Filters allow for additional formatting to variables. ex: <h1>Ingredients cost</h1>
+                                                                     <ul>
+                                                                         {% for ingredient in Recipe.ingredients %}
+                                                                             <li>
+                                                                                ${{ ingredient.cost|floatformat:2 }}
+                                                                             </li>
+                                                                         {% endfor %}
+                                                                     </ul>
+                                                                     *** floatformat filter will add $ sign and
+                                                                         ensure only 2 decimal points(ex: $5.04).
+
+        4. block is used in a parent template to be default content for a child, unless overidden by the child
+           template.(ex included in extends).
+
+        5. extends is used by the child to inherit the base template, then you can change the blocks from the
+           parent as if needed. ex: {1.}Parent:
+                                    <html>
+                                    <head>
+                                        <title>{% block title %} Recipe App {% endblock %}</title>
+                                    </head>
+                                    <body>
+                                       ...other blocks here.
+                                    </body>
+                                    </html>
+
+                                    {2.} Child:
+                                    {% extends "base_template.html" %}
+                                    {% block title %} Recipe : {{ recipe.title }} {% endblock %}
+                                     ...other block modifications.                                                                       

@@ -30,6 +30,9 @@ This repository contains exercises and scripts for the CareerFoundry Python cour
 - [Exercise_2.3](#exercise_23)
   - [Installation](#exercise_23-installation)
   - [Usage](#exercise_23-usage)
+- [Exercise_2.4](#exercise_24)
+  - [Installation](#exercise_24-installation)
+  - [Usage](#exercise_24-usage)
 - [Authors](#authors)
 - [Acknowledgments](#acknowledgments)
  
@@ -226,8 +229,7 @@ This task involved researching Django's benefits, drawbacks, and where the frame
 
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
---------------------------------------------------------------------------------------------------------- 
-
+ 
 ## Exercise_2.2
 
 This task involved learning how to structure Django projects, migrate database tables, run projects locally, and load admin features.
@@ -259,19 +261,52 @@ To install and run the scripts, follow these steps:
 1. Ensure you have Python 3.8.7
 2. Create a virtual environment.
 3. Activate the virtual environments in the terminal.
-4. navigate to A2_Recipe_App\src
+4. Navigate to A2_Recipe_App\src
 5. Install django
-6. make migrations.
-7. migrate.
-8. make superuser.
-9. run server.
-10. add /admin to end up url.
+6. Make migrations.
+7. Migrate.
+8. Make superuser.
+9. Run server and copy url.
+10. Add /admin to the end of the url.
 
 ------------------------------------------------------------------------------------------------------------------------
 
 ### Exercise_2.3-Usage
 
 - When you go to the admin site you can create recipes and add all the ingredients. I tried to add all the fields that will be needed as a base. I broke down the project into 5 apps(ingredient, recipe, recipeingredient, recipeingredientintermediary, user). There are data relationships connecting all of the models created. The recipeingredientintermediary was necessary to associate ingredients with individual recipes, without the recipes adding all ingredients for all recipes. The recipeingredientintermediary connects a many to many relationship between recipe and recipeingredient, allowing each individual recipe to only contain the ingredients that are associated with it.
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+
+## Exercise_2.4
+
+Created a home template and home view for the recipe app.
+
+------------------------------------------------------------------------------------------------------------------------
+
+### Exercise_2.4-Installation
+
+To install and run the scripts, follow these steps:
+
+1. Ensure you have Python 3.8.7
+2. Create a virtual environment.
+3. Activate the virtual environments in the terminal.
+4. Navigate to A2_Recipe_App\src
+5. Install django
+6. Make migrations.
+7. Migrate.
+8. Make superuser.
+9. Run server and copy url.
+10. Copy the url to your browser and it takes you to the home page.
+
+------------------------------------------------------------------------------------------------------------------------
+
+### Exercise_2.4-Usage
+
+- When you go to the home page it display the recipes_home.html page from the recipe templates. It does this through the recipe/views.py in the recipe app. it handles a request that is routed from the project
+level urls.py. The home page that is displayed is a starting point for the recipe_app. I made a logo,
+header, footer, left navigation, and main content area for recipe cards to eventually be paginated. 
+some basic function buttons have been added to the page with hover effects, however the buttons do 
+not currently take you anywhere. I added a popup tag to indicate the sign up button and welcome the user.
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
 ## Authors
