@@ -1,0 +1,124 @@
+body,
+html {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+h1,
+h2,
+h3 {
+    margin-bottom: 1rem;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+header {
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 140px;
+    background: linear-gradient(to bottom, rgba(41, 38, 34, 0.302), rgba(0, 0, 0, 0.302));
+    color: #fff;
+    border-bottom: 1px solid rgba(156, 150, 150, 0.849);
+    text-align: center;
+}
+
+nav form {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 580px;
+    gap: 2rem;
+
+    /* Image free for non-profit use. For temp card display.
+     from - stevepb
+      at  - https://pixabay.com/photos/vegetables-pot-cooking-ingredients-1006694/ */
+}
+
+footer {
+    position: relative;
+    background: linear-gradient(to bottom, rgba(41, 38, 34, 0.302), rgba(0, 0, 0, 0.302));
+    border-top: 1px solid rgba(156, 150, 150, 0.849);
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+    height: 100px;
+}
+
+.left-navigation {
+    position: fixed;
+    min-width: 212px;
+    left: 6px;
+    top: 32%;
+    color: #fff;
+    border-right: 3px solid rgba(156, 150, 150, 0.849);
+}
+
+.left-navigation li {
+    font-size: large;
+    margin-bottom: 2rem;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.left-nav-button {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    width: 200px;
+    height: 100%;
+}
+
+.logo {
+    text-align: left;
+    justify-content: left;
+
+    /* Image free for non-profit use. Made a logo.
+     from - Nile
+      at  - https://pixabay.com/photos/tomato-parsley-pepper-peppercorns-663097/ */
+}
+
+:root {
+    --primary-color: rgb(39, 146, 35);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    border: 5px solid;
+    border-color: rgb(39, 146, 35);
+}
+
+.btn-primary:hover {
+    background-color: rgb(83, 182, 80);
+    border-color: rgb(100, 255, 39);
+
+}
+
+.recipe-card {
+    margin: 3px;
+    padding: 3px;
+}
+
+.d-none {
+    display: none;
+}
