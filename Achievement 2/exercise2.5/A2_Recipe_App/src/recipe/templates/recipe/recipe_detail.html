@@ -22,22 +22,37 @@
                 <section class="container">
                     <div class="row">
                         <div class="col-12" style="text-align: center; justify-content: center;">
-                            <h2>Title: {{object.title}}</h2>
-                            <img src="{{object.pic.url}}" style="padding-bottom: 20px; width: 500px;" />
+                            <h1><b>{{object.title}}</b></h1>
+                            <img src="{{object.pic.url}}" style="padding-bottom: 6px; width: 400px;" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-4"></div>
-                        <div class="col-4" style="text-align: left; justify-content: left;">
+                        <div class="col-4" style="text-align: left; justify-content: left; padding-bottom: 20px;">
                             <br>
                             <b>Provided By: </b>{{object.user}}
                             <br>
                             <b>Ingredients: </b>
                             {% for ingredient in object.recipe_ingredients.all %}
-                            {{ ingredient.ingredient }}
+                            {{ ingredient.ingredient }} - {{ ingredient.amount }} - {{ ingredient.amount_type }}
                             {% if not forloop.last %}, {% endif %}
                             {% endfor %}
                             <br>
+                            <b>Directions: </b>{{object.directions}}
+                            <br>
+                            <b>Cooking Time: </b>{{object.cooking_time}} minutes
+                            <br>
+                            <b>Star Count: </b>{{object.star_count}} stars
+                            <br>
+                            <b>Recipe Type: </b>{{object.recipe_type}}
+                            <br>
+                            <b>Adapted Link: </b>{{object.adapted_link}}
+                            <br>
+                            <b>Servings: </b>{{object.servings}}
+                            <br>
+                            <b>Yield Amount: </b>{{object.yield_amount}}
+                            <br>
+                            <b>Allergens: </b>{{object.allergens}}
                         </div>
                         <div class="col-4"></div>
                     </div>

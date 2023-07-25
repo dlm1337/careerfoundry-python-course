@@ -4,10 +4,10 @@ from django.views.generic import ListView, DetailView
 from .models import Recipe
 
 
-# Create your views here.
-def recipes_home(request):
-    return render(request, "recipe/recipes_home.html")
-
+# Create your views here. 
+class RecipeHome(ListView):
+    model = Recipe
+    template_name = "recipe/recipes_home.html"
 
 # Create your views here.
 class RecipeListView(ListView):  # class-based view

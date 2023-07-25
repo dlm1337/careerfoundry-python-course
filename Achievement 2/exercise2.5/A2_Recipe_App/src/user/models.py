@@ -8,6 +8,7 @@ class User(models.Model):
     username = models.CharField(max_length=150, unique=True)
     password = models.CharField(max_length=128)
     email = models.EmailField(unique=True)
+    pic = models.ImageField(upload_to="user", default="no_picture.jpg")
 
     def __str__(self):
         return str(self.username)

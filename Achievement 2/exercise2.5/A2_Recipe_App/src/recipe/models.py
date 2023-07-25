@@ -37,12 +37,16 @@ class Recipe(models.Model):
     adapted_link = models.URLField(blank=True, null=True, default=None)
     servings = models.PositiveIntegerField(null=True, blank=False)
     yield_amount = models.IntegerField(blank=True, null=True, default=None)
-    allergens = models.TextField(blank=True)
-    small_desc = models.TextField(max_length=35, default="No Description.")
-    pic = models.ImageField(upload_to='recipe', default='no_picture.jpg')
-    
+    allergens = models.TextField(
+        blank=True,
+    )
+    small_desc = models.TextField(
+        max_length=35, default="No Description has been added currently."
+    )
+    pic = models.ImageField(upload_to="recipe", default="no_picture.jpg")
+
     def __str__(self):
         return str(self.name)
-    
+
     def get_absolute_url(self):
-        return reverse ('recipe:detail', kwargs={'pk': self.pk})
+        return reverse("recipe:detail", kwargs={"pk": self.pk})

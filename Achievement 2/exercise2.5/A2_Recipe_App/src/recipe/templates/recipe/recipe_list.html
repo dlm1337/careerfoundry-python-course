@@ -31,9 +31,9 @@
                                             {{object.title}}
                                         </a></h5>
                                     <p class="card-text">{{object.small_desc}}</p>
-                                    <a href="#" class="btn btn-primary">View Recipe</a>
+                                    <a href="{{object.get_absolute_url}}" class="btn btn-primary">View Recipe</a>
                                 </div>
-                                    
+
                             </div>
                         </div>
                         {% endfor %}
