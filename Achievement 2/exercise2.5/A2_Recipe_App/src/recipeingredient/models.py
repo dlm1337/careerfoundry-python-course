@@ -5,7 +5,7 @@ AMOUNT_TYPES = (
     ("cup", "Cup"),
     ("teaspoon", "Teaspoon"),
     ("tablespoon", "Tablespoon"),
-    ("fluid_ounce", "Fluid Ounce"),
+    ("fluid ounce", "Fluid Ounce"),
     ("pint", "Pint"),
     ("quart", "Quart"),
     ("gallon", "Gallon"),

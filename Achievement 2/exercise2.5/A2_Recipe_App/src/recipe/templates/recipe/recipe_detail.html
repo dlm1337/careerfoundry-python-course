@@ -34,13 +34,15 @@
                             <br>
                             <b>Ingredients: </b>
                             {% for ingredient in object.recipe_ingredients.all %}
-                            {{ ingredient.ingredient }} - {{ ingredient.amount }} - {{ ingredient.amount_type }}
-                            {% if not forloop.last %}, {% endif %}
+                            {{ ingredient.ingredient }} - {{ ingredient.amount }} {{ ingredient.amount_type }}
+                            {% if not forloop.last %}| {% endif %}
                             {% endfor %}
                             <br>
                             <b>Directions: </b>{{object.directions}}
                             <br>
                             <b>Cooking Time: </b>{{object.cooking_time}} minutes
+                            <br>
+                            <b>Difficulty: </b>{{object.calculate_difficulty}}
                             <br>
                             <b>Star Count: </b>{{object.star_count}} stars
                             <br>

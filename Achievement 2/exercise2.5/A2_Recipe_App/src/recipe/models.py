@@ -46,7 +46,22 @@ class Recipe(models.Model):
     pic = models.ImageField(upload_to="recipe", default="no_picture.jpg")
 
     def __str__(self):
-        return str(self.name)
+        return str(self.title)
 
     def get_absolute_url(self):
         return reverse("recipe:detail", kwargs={"pk": self.pk})
+
+    def calculate_difficulty(self):
+        try:
+            ingredients_len = len(self.recipe_ingredients.all())
+            if self.cooking_time < 10 and ingredients_len < 4:
+                return "Easy"
+            elif self.cooking_time < 10 and ingredients_len > 4:
+                return "Medium"
+            elif self.cooking_time >= 10 and ingredients_len < 4:
+                return "Intermediate"
+            elif self.cooking_time >= 10 and ingredients_len >= 4:
+                return "Hard"
+        except:
+            print("Missing an appropriate cooking time or ingredients.")
+            return "Missing cooking time or ingredients."
