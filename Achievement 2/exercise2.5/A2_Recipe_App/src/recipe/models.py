@@ -41,7 +41,7 @@ class Recipe(models.Model):
         blank=True,
     )
     small_desc = models.TextField(
-        max_length=35, default="No Description has been added currently."
+        max_length=200, default="No Description has been added currently."
     )
     pic = models.ImageField(upload_to="recipe", default="no_picture.jpg")
 
