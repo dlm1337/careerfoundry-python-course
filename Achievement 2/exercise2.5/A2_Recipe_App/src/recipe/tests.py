@@ -1,9 +1,12 @@
-from django.test import TestCase, Client
+import os
+import uuid
+from django.test import TestCase, Client, override_settings
 from .models import Recipe
 from django.core.exceptions import ValidationError
 from recipeingredient.models import RecipeIngredient
 from ingredient.models import Ingredient
 from recipeingredientintermediary.models import RecipeIngredientIntermediary
+from django.core.files import File
 
 # Create your tests here.
 
@@ -249,3 +252,39 @@ class RecipeModelTest(TestCase):
         recipe = Recipe()
         result = recipe.calculate_difficulty()
         self.assertEqual(result, "Missing cooking time or ingredients.")
+
+    @override_settings(
+        MEDIA_ROOT="/tmp"
+    )  # Override the MEDIA_ROOT setting to use a temporary directory
+    def test_recipe_pic(self):
+        # Use the existing "no_picture.jpg" from the media folder
+        image_path = os.path.join("media", "no_picture.jpg")
+
+        # Assert that the file exists in the media folder
+        self.assertTrue(os.path.exists(image_path))
+
+        # Generate a unique identifier for the test image file name
+        test_image_name = f"test_no_picture_{uuid.uuid4().hex}.jpg"
+
+        # Create a Recipe instance without setting the pic attribute
+        recipe = Recipe.objects.create(
+            title="Test Recipe",
+            directions="Test Directions",
+            cooking_time=15,
+            star_count=4,
+            recipe_type="snack",
+            servings=1,
+        )
+
+        # Set the pic attribute using the existing "no_picture.jpg" file
+        with open(image_path, "rb") as f:
+            recipe.pic.save(test_image_name, File(f))
+
+        # Retrieve the Recipe instance and check if the pic attribute is set correctly
+        recipe = Recipe.objects.get(id=recipe.id)
+        expected_pic_path = os.path.join("recipe", test_image_name)
+
+        # Replace backslashes with forward slashes in the expected path to make it platform-independent
+        expected_pic_path = expected_pic_path.replace("\\", "/")
+
+        self.assertEqual(recipe.pic.name, expected_pic_path)
