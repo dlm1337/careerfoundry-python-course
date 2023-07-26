@@ -1,0 +1,75 @@
+Exercise 2.5: Django MVT Revisited
+
+Learning Goals
+
+●	Add images to the model and display them on the frontend of your application
+●	Create complex views with access to the model
+●	Display records with views and templates
+
+
+Reflection Questions
+
+1.	In your own words, explain Django static files and how Django handles them.
+
+
+        Static files in Django are used to have css/images/js files that will not change due to user
+        interaction or server-side operations. 'django.contrib.staticfiles' is one of the modules
+        provided by Django to serve static files. It is defined under installed apps in the
+        project level settings. You will also have to define the url to serve static files in
+        the project level settings. This is defined as STATIC_URL. You can create a folder in your
+        apps, then use {% load static %} tag in your templates. The template tag will build the static
+        files for your template. In production Django will not automatically serve static files. This
+        is insecure and they need to be served through a web server such as Nginx. Defining
+        STATICFILES_DIRS in your project settings, allows for static files to be used that are
+        not tied to the same app. For production you can define STATIC_ROOT for setting up static
+        files for a web server. Django's collectstatic command will bundle on the static files
+        for production.
+        
+        reference documentation: https://docs.djangoproject.com/en/4.2/howto/static-files/
+
+
+2.	Look up the following two Django packages on Django’s official documentation and/or other trusted sources. 
+    Write a brief description of each.
+
+
+Package               	Description
+
+ListView	           Design for a list of objects. Designed to be a base class in your custom 
+                       class view. Has access to powerful methods from inheritance of other Python generic 
+                       views. The list of objects is iterated on using template tag logical operations,
+                       such as for loops.     
+
+
+
+
+DetailView	           Designed for working with a single record. Designed to be a base class in your custom 
+                       class view. Has access to powerful methods from inheritance of other Python generic 
+                       views. Usually used through the primary key of a single object, attached to the end 
+                       of a url in the associated model function. 
+                         
+    Reference Documentation: https://docs.djangoproject.com/en/4.2/ref/class-based-views/generic-display/
+
+
+
+3.	You’re now more than halfway through Achievement 2! Take a moment to reflect on your learning in the course
+    so far. How is it going? What’s something you’re proud of so far? Is there something you’re struggling 
+    with? What do you need more practice with? You can use these notes to guide your next mentor call.
+
+
+        Well I am happy it seems like we are on the final lap. It has been wonderful learning python/Django.
+        From my experience, I can really see why it is called 'Batteries Included'. I will be using Django
+        in the future for sure I really like the layout and it seems like it is really coming together. The
+        structure od Django seems very efficient. I really like the template syntax and proud of how Well
+        I have been able to use it. I think i could improve on the current structure by not having the home
+        page as the base template. Doing something more global for a more true base template I think would
+        be helpful. I am excited to make more views and I think the many to many relationship has been very
+        helpful. I will try to practice not repeating myself as much in my css, and try to make sure the
+        templates do not get hard to read. I will also try to improve the html structure.
+
+
+Frontend Inspirations(screenshot labeled frontend_inspirations in screenshots folder):
+
+    link: https://www.jimmydean.com/recipes/
+     
+    What I liked: I really like the reversing, side by side cards on this site. I like that it has the top 
+    recipes on the welcome site, which i may eventually incorporate.

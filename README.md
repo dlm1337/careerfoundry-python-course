@@ -33,6 +33,9 @@ This repository contains exercises and scripts for the CareerFoundry Python cour
 - [Exercise_2.4](#exercise_24)
   - [Installation](#exercise_24-installation)
   - [Usage](#exercise_24-usage)
+- [Exercise_2.5](#exercise_25)
+  - [Installation](#exercise_25-installation)
+  - [Usage](#exercise_25-usage)
 - [Authors](#authors)
 - [Acknowledgments](#acknowledgments)
  
@@ -307,6 +310,37 @@ level urls.py. The home page that is displayed is a starting point for the recip
 header, footer, left navigation, and main content area for recipe cards to eventually be paginated. 
 some basic function buttons have been added to the page with hover effects, however the buttons do 
 not currently take you anywhere. I added a popup tag to indicate the sign up button and welcome the user.
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+
+## Exercise_2.5
+
+Updated Models in the recipe app. created list view and detail view. created links and made the project more visually appealing with more data being injected now.
+
+------------------------------------------------------------------------------------------------------------------------
+
+### Exercise_2.5-Installation
+
+To install and run the scripts, follow these steps:
+
+1. Ensure you have Python 3.8.7
+2. Create a virtual environment.
+3. Activate the virtual environments in the terminal.
+4. Navigate to A2_Recipe_App\src
+5. Install django
+6. Make migrations.
+7. Migrate.
+8. Make superuser.
+9. Run server and copy url.
+10. Copy the url to your browser and it takes you to the home page.
+
+------------------------------------------------------------------------------------------------------------------------
+
+### Exercise_2.5-Usage
+
+- You can go to Your recipes from the left navigation, which will represent the listing of the users recipes.
+Home page will contain recipes from all users. Detail view can be accessed from the home page or list view.
+I tried to make it look better all around with css. I also iplemented a parent child relationship with the templates to allow for code re-use. Currently the home view is the parent template and the list, detail view are extending it with block modifications to the main content. Additionally testing was added for the new pics attribute and calculate difficulty. I found inspiration for the cards on the homepage from the Jummy dean site. I liked that style cards, but kept the original style for the user recipes in the list view. I may possibly make the home page for the top rated recipes. I think ideally searching from the home page should be all user recipes, and searching from 'your recipes' will search within the current user's recipes only.
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
 ## Authors
