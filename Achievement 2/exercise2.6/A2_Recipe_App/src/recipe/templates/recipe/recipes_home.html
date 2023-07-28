@@ -29,10 +29,19 @@
                 </div>
                 <div class="col-3">
                     <div class="btn-group" role="group" aria-label="Button row">
-                        <button type="button" class="btn btn-primary mx-2">Login</button>
+                        {% if user.is_authenticated %}
+                        <button type="button" class="btn btn-primary mx-2"><a href="{%url 'logout' %}"> Logout
+                            </a></button>
+                        <button type="button" class="btn btn-primary mx-2"><a href="{%url 'your_profile' %}"> Profile
+                            </a></button>
+                        {% else %}
+                        <button type="button" class="btn btn-primary mx-2"> <a href="{%url 'login' %}"> Login
+                            </a></button>
                         <button id="signUpBtn" type="button" class="btn btn-primary mx-2" data-bs-toggle="popover"
                             data-bs-html="true">
-                            Sign Up
+                            <a href="{%url 'register' %}"> Register
+                            </a></button>
+                        {% endif %}
                         </button>
                     </div>
                 </div>
@@ -119,7 +128,14 @@
             <li><a href="/" class="btn btn-primary left-nav-button" type="submit">Home</a></li>
             <li><button class="btn btn-primary left-nav-button" type="submit">Create</button></li>
             <li><button class="btn btn-primary left-nav-button" type="submit">Edit</button></li>
+            {% if user.is_authenticated %}
             <li><a href="/list" class="btn btn-primary left-nav-button" type="submit">Your Recipes</a></li>
+
+            {% else %}
+            <li><a href="/list" class="btn btn-primary left-nav-button" type="submit" hidden>Your Recipes</a></li>
+
+            {% endif %}
+            </li>
         </ul>
     </div>
 

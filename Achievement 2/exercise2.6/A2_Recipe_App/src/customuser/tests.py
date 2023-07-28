@@ -1,23 +1,23 @@
 from django.test import TestCase
 from django.core.exceptions import ValidationError
-from .models import User
+from .models import CustomUser
 
 
-class UserModelTestCase(TestCase):
+class CustomUserModelTestCase(TestCase):
     def setUpTestData():
-        User.objects.create(
+        CustomUser.objects.create(
             username="fakeuser",
             password="fakepassword",
             email="fakeEmail@fake.com",
         )
 
     def test_user_email(self):
-        user = User.objects.get(id=1)
+        user = CustomUser.objects.get(id=1)
         field_label = user._meta.get_field("email").verbose_name
         self.assertEqual(field_label, "email")
 
     def test_user_creation(self):
-        user = User.objects.create(
+        user = CustomUser.objects.create(
             username="testuser", password="testpassword", email="test@example.com"
         )
         self.assertIsNotNone(user.id)
@@ -26,25 +26,25 @@ class UserModelTestCase(TestCase):
         self.assertEqual(user.email, "test@example.com")
 
     def test_unique_username(self):
-        User.objects.create(
+        CustomUser.objects.create(
             username="testuser", password="password1", email="email1@example.com"
         )
         with self.assertRaises(Exception):
-            User.objects.create(
+            CustomUser.objects.create(
                 username="testuser", password="password2", email="email2@example.com"
             )
 
     def test_unique_email(self):
-        User.objects.create(
+        CustomUser.objects.create(
             username="username1", password="password1", email="test@example.com"
         )
         with self.assertRaises(Exception):
-            User.objects.create(
+            CustomUser.objects.create(
                 username="username2", password="password2", email="test@example.com"
             )
 
     def test_string_representation(self):
-        user = User.objects.create(
+        user = CustomUser.objects.create(
             username="testuser", password="testpassword", email="test@example.com"
         )
         self.assertEqual(str(user), "testuser")
@@ -52,7 +52,7 @@ class UserModelTestCase(TestCase):
     def test_maximum_username_length(self):
         long_username = "a" * 151
         with self.assertRaises(ValidationError):
-            user = User(
+            user = CustomUser(
                 username=long_username,
                 password="testpassword",
                 email="test@example.com",
@@ -62,7 +62,7 @@ class UserModelTestCase(TestCase):
     def test_maximum_password_length(self):
         long_password = "a" * 129
         with self.assertRaises(ValidationError):
-            user = User(
+            user = CustomUser(
                 username="testuser", password=long_password, email="test@example.com"
             )
             user.full_clean()
@@ -70,7 +70,7 @@ class UserModelTestCase(TestCase):
     def test_valid_email_address(self):
         invalid_email = "invalid-email"
         with self.assertRaises(ValidationError):
-            user = User(
+            user = CustomUser(
                 username="testuser", password="testpassword", email=invalid_email
             )
             user.full_clean()
