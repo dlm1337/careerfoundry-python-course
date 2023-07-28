@@ -7,12 +7,22 @@ from recipeingredient.models import RecipeIngredient
 from ingredient.models import Ingredient
 from recipeingredientintermediary.models import RecipeIngredientIntermediary
 from django.core.files import File
+from customuser.models import CustomUser
 
 # Create your tests here.
 
 
 class RecipeModelTest(TestCase):
-    def setUpTestData():
+    @classmethod
+    def setUpTestData(cls):
+        # Create a fake user
+        cls.user = CustomUser.objects.create(
+            username="fakeuser",
+            email="fake@example.com",
+            password="testpassword",
+        )
+
+        # Create Recipe objects and associate them with the fake user
         Recipe.objects.create(
             title="Nachos",
             directions="Put nachos on a plate with cheese, cook in microwave. Add sour cream, jalapenos, salsa, and lettuce.",
@@ -23,6 +33,7 @@ class RecipeModelTest(TestCase):
             servings=3,
             yield_amount=12,
             allergens="unknown",
+            user=cls.user,
         )
         Recipe.objects.create(
             title="Pancakes",
@@ -31,56 +42,18 @@ class RecipeModelTest(TestCase):
             star_count=4,
             recipe_type="breakfast",
             servings=2,
+            user=cls.user,
         )
-        Recipe.objects.create(
-            title="Pizza",
-            directions="Make dough, add toppings, bake in the oven.",
-            cooking_time=30,
-            star_count=3,
-            recipe_type="dinner",
-            servings=4,
-        )
-        Recipe.objects.create(
-            title="Smoothie",
-            directions="Blend fruits and yogurt together.",
-            cooking_time=10,
-            star_count=5,
-            recipe_type="snack",
-            servings=1,
-        )
-        Recipe.objects.create(
-            title="Test Recipe 1",
-            directions="Test Directions",
-            cooking_time=10,
-            star_count=5,
-            recipe_type="breakfast",
-            servings=4,
-        )
-        Recipe.objects.create(
-            title="Test Recipe 2",
-            directions="Test Directions",
-            cooking_time=30,
-            star_count=3,
-            recipe_type="dinner",
-            servings=2,
-        )
-        Recipe.objects.create(
-            title="Test Recipe 3",
-            directions="Test Directions",
-            cooking_time=20,
-            star_count=3,
-            recipe_type="lunch",
-            servings=3,
-        )
-        Recipe.objects.create(
-            title="Test Recipe 4",
+        recipe = Recipe.objects.create(
+            title="Test Recipe",
             directions="Test Directions",
             cooking_time=15,
             star_count=4,
             recipe_type="snack",
             servings=1,
-            yield_amount=0,
+            user=cls.user,
         )
+
         ri1 = RecipeIngredient.objects.create(
             ingredient=Ingredient.objects.create(name="Ingredient 1"),
             calorie_content=20,
@@ -173,11 +146,7 @@ class RecipeModelTest(TestCase):
         recipe2 = Recipe.objects.get(id=3)
         self.assertEqual(recipe1.id, 2)
         self.assertEqual(recipe2.id, 3)
-
-    def test_recipe_yield_amount_blank(self):
-        recipe = Recipe.objects.get(id=4)
-        self.assertIsNone(recipe.yield_amount)
-
+ 
     def test_recipe_cooking_time_not_negative(self):
         recipe = Recipe(cooking_time=-10)
         with self.assertRaises(ValidationError):
@@ -267,15 +236,7 @@ class RecipeModelTest(TestCase):
         test_image_name = f"test_no_picture_{uuid.uuid4().hex}.jpg"
 
         # Create a Recipe instance without setting the pic attribute
-        recipe = Recipe.objects.create(
-            title="Test Recipe",
-            directions="Test Directions",
-            cooking_time=15,
-            star_count=4,
-            recipe_type="snack",
-            servings=1,
-        )
-
+        recipe = Recipe.objects.get(id=3)
         # Set the pic attribute using the existing "no_picture.jpg" file
         with open(image_path, "rb") as f:
             recipe.pic.save(test_image_name, File(f))

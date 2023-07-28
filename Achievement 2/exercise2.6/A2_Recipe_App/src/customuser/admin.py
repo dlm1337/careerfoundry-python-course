@@ -4,8 +4,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 
 # Create a new class for CustomUserAdmin that inherits from BaseUserAdmin
-class CustomUserAdmin(BaseUserAdmin):
-    # Add the 'pic' field to the fields attribute to display it in the admin
+class CustomUserAdmin(BaseUserAdmin): 
     fieldsets = (
         (None, {"fields": ("username", "password")}),
         ("Personal Info", {"fields": ("first_name", "last_name", "email", "pic")}),

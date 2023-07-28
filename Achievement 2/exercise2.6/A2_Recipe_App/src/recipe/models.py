@@ -1,6 +1,6 @@
 from django.db import models
 from django.shortcuts import reverse
-from django.contrib.auth import get_user_model
+from customuser.models import CustomUser
 
 RECIPE_TYPES = (
     ("breakfast", "Breakfast"),
@@ -18,7 +18,11 @@ RECIPE_TYPES = (
 class Recipe(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=255)
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, default=1)
+    user = models.ForeignKey(
+        CustomUser,
+        on_delete=models.CASCADE,
+        related_name="recipes",
+    )
     recipe_ingredients = models.ManyToManyField(
         "recipeingredient.RecipeIngredient",
         through="recipeingredientintermediary.RecipeIngredientIntermediary",

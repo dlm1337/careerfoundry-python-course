@@ -4,13 +4,33 @@ from django.core.exceptions import ValidationError
 from .models import RecipeIngredient
 from ingredient.models import Ingredient
 from recipe.models import Recipe
+from customuser.models import CustomUser
 
 
 # Create your tests here
 class RecipeIngredientModelTest(TestCase):
-    def setUpTestData():
+    @classmethod
+    def setUpTestData(cls):
+        # Create a fake user
+        cls.user = CustomUser.objects.create(
+            username="fakeuser",
+            email="fake@example.com",
+            password="testpassword",
+        )
+
         ingredient = Ingredient.objects.create(name="Ingredient 1")
-        recipe = Recipe.objects.create(title="Recipe 1")
+        recipe = Recipe.objects.create(
+            title="Nachos",
+            directions="Put nachos on a plate with cheese, cook in microwave. Add sour cream, jalapenos, salsa, and lettuce.",
+            cooking_time=3,
+            star_count=5,
+            recipe_type="snack",
+            adapted_link="https://nachos.com",
+            servings=3,
+            yield_amount=12,
+            allergens="unknown",
+            user=cls.user,
+        )
 
         RecipeIngredient.objects.create(
             ingredient=ingredient,
