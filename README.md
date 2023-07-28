@@ -36,6 +36,9 @@ This repository contains exercises and scripts for the CareerFoundry Python cour
 - [Exercise_2.5](#exercise_25)
   - [Installation](#exercise_25-installation)
   - [Usage](#exercise_25-usage)
+- [Exercise_2.6](#exercise_26)
+  - [Installation](#exercise_26-installation)
+  - [Usage](#exercise_26-usage)
 - [Authors](#authors)
 - [Acknowledgments](#acknowledgments)
  
@@ -341,6 +344,38 @@ To install and run the scripts, follow these steps:
 - You can go to Your recipes from the left navigation, which will represent the listing of the users recipes.
 Home page will contain recipes from all users. Detail view can be accessed from the home page or list view.
 I tried to make it look better all around with css. I also iplemented a parent child relationship with the templates to allow for code re-use. Currently the home view is the parent template and the list, detail view are extending it with block modifications to the main content. Additionally testing was added for the new pics attribute and calculate difficulty. I found inspiration for the cards on the homepage from the Jimmy dean site. I liked the style cards they use, I may make the home page display top rated recipes.
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+
+## Exercise_2.6
+
+Updated the application to use Django authentication. Implemented login and logout features.
+
+------------------------------------------------------------------------------------------------------------------------
+
+### Exercise_2.6-Installation
+
+To install and run the scripts, follow these steps:
+
+1. Ensure you have Python 3.8.7
+2. Create a virtual environment.
+3. Activate the virtual environments in the terminal.
+4. Navigate to A2_Recipe_App\src
+5. Install django
+6. Make migrations.
+7. Migrate.
+8. Make superuser.
+9. Run server and copy url.
+10. Copy the url to your browser and it takes you to the home page.
+
+------------------------------------------------------------------------------------------------------------------------
+
+### Exercise_2.6-Usage
+
+- You can now login and logout from anywhere on the application. Logging in will redirect the user to there personal
+recipes. Logging out will redirect the user to a logout confirmation page. You can also register new users. It incorporates forms from django auth libraries to handle authentication of user information. Added decorators/inherited login confirmation mixins, to protect views from access when a user is not authenticated. Had to update my
+testing to account for the customUser model. The CustomUser model inherits the Django user base class, so I could
+add additional attributes/extend the functionality. 
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
 ## Authors

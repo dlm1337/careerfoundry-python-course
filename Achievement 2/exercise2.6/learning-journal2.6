@@ -9,25 +9,86 @@ Learning Goals
 Reflection Questions
 
 1.	In your own words, write down the importance of incorporating authentication into an application. You can take
-    an example application to explain your answer. 
+    an example application to explain your answer.            
+
+
+        Authentication is a very important part of application development. It is mainly about verifying/authenticating 
+        the identity of users. It is focused on confirming the user's identity through credentials such as username and 
+        password to prevent common threats. Authentication relies on hashed passwords to verify the user's identity, 
+        for protection of sensitive information. Using secure communication protocols in your authentication process, 
+        will ensure your data is encrypted in transfer between your device and accessed server. It is important to keep 
+        your authentication up-to-date with the latest security patches available to your platform. Security threats are 
+        constantly changing. Ensuring your application is using the best Authentication available is very important. 
+        industry regulations may require authentication to meet standards for data protection and privacy. Enforcing 
+        strong passwords with minimum length requirements, regular update requirements, or required characters are good 
+        authentication practices. In Django features like decorators allow views to require login authentication, which is
+        helpful at controlling the flow of permitted access. Django has a lof of helpful views that are ready to use for 
+        authentication like login, logout, registration, and more. Django has security middleware built in such as 
+        protection against XSS,CSRF, and many other commonly exploited web weaknesses/threats. Django has built in forms 
+        that are ready to use as well, with good validation and error handling. Applications should use authentication to 
+        check for to many invalid login attempts, to prevent brute-force attacks and provide better user login security.
+        Places like banks or social media platforms need robust authentication, as they deal with highly sensitive data. 
+        Good security builds trust with the user, and is of great importance for building a good user relationship.
+
+        reference: https://brightsec.com/blog/the-role-of-secure-authentication-and-authorization-in-application-security/ 
+
+                   https://docs.djangoproject.com/en/4.2/topics/auth/default/
+
  
-
-2.	In your own words, explain the steps you should take to create a login for your Django web application. 
-
+ 2.	In your own words, explain the steps you should take to create a login for your Django web application. 
 
 
-3.	Look up the following three Django functions on Django’s official documentation and/or other trusted sources and 
+        I would create a template folder in the src folder. I would create a folder called auth inside the template 
+        folder, including a file named login.html for the template. Then I would import the neccesary 
+        'django.contrib.auth' libraries in a views.py file at the project level(login, logout, other authentication 
+        services). The login view would use the imported login function, and the logout view would use the imported 
+        logout function. The required username and password would use the autheticate auth app, to securely check 
+        the provided password against the hashed password in the database. Authenticate function is an important part
+        in the Django authentication process. Then you can pass username/password into the login function. After that
+        I would set redirects to desired pages, assuming the user is authenticated in the login or after logout.
+        Where the TEMPLATES are defined in the settings.py change the included '"DIRS": []' to '"DIRS": 
+        [BASE_DIR / "templates"]', so you can establish project level templates in the src folder. After the login
+        logout views are setup, I would update the project level urls.py to include the paths to the login/logout
+        view. This would involve providing the correct route and importing the views. In your apps you should add
+        'django.contrib.auth.mixins' in your class based views, or 'django.contrib.auth.decorators' for your function 
+        based views. The inheritance in class based and decorators in function based, are pre-built django login
+        confirmation functionality attached to views. So any access to that view is restricted if the user is
+        not authenticated. It is also important to use the tag '{% csrf_token %}' in your template forms for enhanced
+        security. When the server sends a web form it attaches the token in a hidden field. When the form is 
+        submitted it will include the token to allow authentication back on the server side. You can also use tag 
+        '{% if user.is_authenticated %}' in your templates, to control what is displayed based on user status. 
+        Another thing i found helpful was the get_queryset() function in the pre-built listView. In my case it allowed
+        for filtering only a particular user's recipe data, based on which user created it(user being the recipe 
+        ForeignKey). It is also good to make a template indicating the user has been logged out as a redirect for the 
+        logout view. You should ensure that trying to access a page only accessible by someone logged-in, takes you to 
+        the login page instead. This should happen if you have correctly set up your views with login_required 
+        decorators/inherited classes from the django auth libraries.
+
+    reference: https://docs.djangoproject.com/en/4.2/topics/auth/default/
+              
+               https://learndjango.com/tutorials/django-login-and-logout-tutorial
+
+
+ 3.	Look up the following three Django functions on Django’s official documentation and/or other trusted sources and 
     write a brief description of each.
 
 
 Function	                Description
-authenticate()	
+
+authenticate()	            It is a validation process for username/password, that will return the user object as 
+                            authenticated, if the username and password matches the database. It will Check the 
+                            password verse its hashed representation in the database.  
 
 
-redirect()	
+redirect()	                For URL redirecting. It is commonly used after a form has been validated or a condition
+                            has been met that requires a different page. It differs from Render because it is not 
+                            using the same url to render a template and model information. It is simpily relocating 
+                            the user to another path. 
 
-
-include()	
+include()	                A way to use url patterns across apps. You can define your project level urls to include
+                            all paths in a given app. So it would take the base route in the project level path
+                            and add whatever paths are in the app as routes as well. It makes it easier to establish
+                            pathing and promotes code re-use across apps or modules.
 
 
 

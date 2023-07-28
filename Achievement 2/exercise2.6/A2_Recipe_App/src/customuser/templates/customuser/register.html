@@ -1,6 +1,4 @@
 {% extends "recipe/recipes_home.html" %}
-<style>
-</style>
 {% block main %}
 <div class="row" style="margin-top: 206px">
     <div class="col-2"></div>
@@ -11,7 +9,7 @@
                 <h2>Register</h2>
                 <form method="post">
                     {% csrf_token %}
-                    {{ form.as_p }} 
+                    {{ form.as_p }}
                     <button class="btn-primary" type="submit">Register</button>
                 </form>
             </section>

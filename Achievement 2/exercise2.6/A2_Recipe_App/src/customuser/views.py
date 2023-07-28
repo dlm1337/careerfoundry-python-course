@@ -34,7 +34,6 @@ def your_profile(request):
 
     return render(request, "customuser/your_profile.html", {"form": form})
 
-  # Require login to access this view
+
 def success(request):
-    
     return render(request, "customuser/success.html")
