@@ -17,6 +17,7 @@ def register_user(request):
 
     return render(request, "customuser/register.html", {"form": form})
 
+
 @login_required  # Require login to access this view
 def your_profile(request):
     if request.method == "POST":
@@ -27,7 +28,13 @@ def your_profile(request):
             # Redirect to a success page or the profile page itself after successful update
             return redirect("your_profile")
     else:
-        form = CustomUserUpdateForm(instance=request.user)  # Prefill the form with existing user data
+        form = CustomUserUpdateForm(
+            instance=request.user
+        )  # Prefill the form with existing user data
 
     return render(request, "customuser/your_profile.html", {"form": form})
- 
+
+  # Require login to access this view
+def success(request):
+    
+    return render(request, "customuser/success.html")

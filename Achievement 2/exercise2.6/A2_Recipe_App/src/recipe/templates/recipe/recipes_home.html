@@ -28,11 +28,12 @@
                     </form>
                 </div>
                 <div class="col-3">
-                    <div class="btn-group" role="group" aria-label="Button row">
+                    <div class="btn-group" role="group" aria-label="Button row" id="buttonContainer">
                         {% if user.is_authenticated %}
                         <button type="button" class="btn btn-primary mx-2"><a href="{%url 'logout' %}"> Logout
                             </a></button>
-                        <button type="button" class="btn btn-primary mx-2"><a href="{%url 'your_profile' %}"> Profile
+                        <button type="button" class="btn btn-primary mx-2"><a href="{%url 'your_profile' %}">
+                                Profile
                             </a></button>
                         {% else %}
                         <button type="button" class="btn btn-primary mx-2"> <a href="{%url 'login' %}"> Login
@@ -40,9 +41,9 @@
                         <button id="signUpBtn" type="button" class="btn btn-primary mx-2" data-bs-toggle="popover"
                             data-bs-html="true">
                             <a href="{%url 'register' %}"> Register
-                            </a></button>
-                        {% endif %}
+                            </a>
                         </button>
+                        {% endif %}
                     </div>
                 </div>
             </nav>
@@ -139,14 +140,16 @@
         </ul>
     </div>
 
-    <div id="signUpPopoverContent" class="popover d-none" role="tooltip">
-        <div class="popover-body">
-            Welcome! Click here to sign up and add recipes!
-        </div>
-    </div>
+
     {% endblock %}
 
     {% block welcome_script %}
+    <div id="signUpPopoverContent" style="display: none;"> 
+        <div>
+            <h3>Register</h3>
+            <p>Enter your details to register.</p>
+        </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         function initializePopover() {

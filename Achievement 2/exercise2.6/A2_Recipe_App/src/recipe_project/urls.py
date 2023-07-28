@@ -23,6 +23,7 @@ from .views import login_view, logout_view
 from customuser.views import (
     register_user,
     your_profile,
+    success
 )  
 
 urlpatterns = [
@@ -32,6 +33,7 @@ urlpatterns = [
     path("logout/", logout_view, name="logout"),
     path("register/", register_user, name="register"),  # Add this URL pattern
     path("your-profile/", your_profile, name="your_profile"),
+    path("success/", success, name="success"),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
