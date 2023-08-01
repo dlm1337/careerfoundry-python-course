@@ -26,30 +26,12 @@ class RecipeHome(ListView, FormView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        form = self.get_form()
-        
-        if form.is_valid():
-            recipe_name = form.cleaned_data.get("ingredient_or_recipe")
-            search_mode = form.cleaned_data.get("search_mode")
-
-            if search_mode == "#1":
-                # Filter recipes by the current user's recipes only
-                queryset = queryset.filter(
-                    user=self.request.user, title__icontains=recipe_name
-                )
-            elif search_mode == "#2":
-                queryset = queryset.filter(title__icontains=recipe_name)
-            elif search_mode == "#3":
-                # Show all recipes from all users
-                queryset = Recipe.objects.all()
 
         for recipe in queryset:
             recipe.title = get_recipe_from_title(recipe.title)
 
         return queryset
 
-    def form_valid(self, form):
-        return self.get(self.request)  # Refresh the page after form submission
 
 class RecipeListView(LoginRequiredMixin, ListView):
     model = Recipe
@@ -67,3 +49,58 @@ class RecipeListView(LoginRequiredMixin, ListView):
 class RecipeDetailView(DetailView):
     model = Recipe
     template_name = "recipe/recipe_detail.html"
+
+
+class RecipeSearchView(FormView):
+    template_name = "recipe/search.html"
+    form_class = RecipeSearchForm
+
+    def form_valid(self, form):
+        queryset = self.get_queryset(form)
+
+        # Convert the search results (queryset) into a Pandas DataFrame
+        data = {
+            "Recipe Title": [recipe.title for recipe in queryset],
+            "Other Columns": [
+                recipe.directions for recipe in queryset
+            ],  # Add other columns as needed
+        }
+        df = pd.DataFrame(data)
+
+        # Store the DataFrame in the context to access it in the template
+        self.extra_context = {
+            "search_results_df": df.to_html(
+                classes="table table-bordered table-hover", index=False
+            )
+        }
+
+        return self.render_to_response(self.get_context_data())
+
+    def get_queryset(self, form):
+        recipe_name = form.cleaned_data.get("ingredient_or_recipe")
+        search_mode = form.cleaned_data.get("search_mode")
+
+        if search_mode == "#1" and not self.request.user.is_authenticated:
+            return Recipe.objects.none()
+
+        queryset = Recipe.objects.all()
+
+        if search_mode == "#1":
+            # Filter recipes by the current user's recipes only
+            queryset = queryset.filter(
+                user=self.request.user, title__icontains=recipe_name
+            )
+        elif search_mode == "#2":
+            queryset = queryset.filter(title__icontains=recipe_name)
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Check if the search results DataFrame is available in the extra context
+        if hasattr(self, "extra_context") and "search_results_df" in self.extra_context:
+            search_results_df = self.extra_context["search_results_df"]
+            context["search_results_df"] = search_results_df
+
+        return context

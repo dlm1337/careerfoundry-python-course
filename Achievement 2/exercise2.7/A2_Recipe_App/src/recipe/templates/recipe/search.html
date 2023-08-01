@@ -1,0 +1,23 @@
+{% extends "recipe/recipes_home.html" %}
+{% load static %}
+{% load custom_filters %}
+
+{% block main %}
+<div class="row" style="margin-top: 156px">
+    <div class="col-2"></div>
+    <div class="col-10">
+        <main>
+            <section class="container" style="padding-bottom: 20px; color: white"> 
+                {% if search_results_df %}
+                <div class="table-responsive">
+                    {{ search_results_df | safe }}
+                </div>
+                {% endif %}
+            </section>
+        </main>
+    </div>
+</div>
+{% endblock %}
+
+{% block welcome_script %}
+{% endblock %}
