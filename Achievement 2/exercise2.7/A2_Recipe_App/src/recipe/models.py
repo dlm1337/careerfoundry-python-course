@@ -1,6 +1,6 @@
 from django.db import models
 from django.shortcuts import reverse
-from customuser.models import CustomUser
+from customuser.models import CustomUser 
 
 RECIPE_TYPES = (
     ("breakfast", "Breakfast"),

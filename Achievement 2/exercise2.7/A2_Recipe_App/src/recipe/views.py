@@ -1,45 +1,55 @@
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, FormView
 from .models import Recipe
 from django.contrib.auth.mixins import LoginRequiredMixin
-
 from .forms import RecipeSearchForm
-
 import pandas as pd
 from .utils import get_recipe_from_title
+from django.shortcuts import redirect
 
 
-class RecipeHome(ListView):
+class RecipeHome(ListView, FormView):
     model = Recipe
     template_name = "recipe/recipes_home.html"
+    context_object_name = "recipes"
+    form_class = RecipeSearchForm
+    success_url = "/"
+
+    def dispatch(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            search_mode = form.cleaned_data.get("search_mode")
+
+            if search_mode == "#1" and not request.user.is_authenticated:
+                return redirect("login")
+
+        return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
-        # Access the request object using self.request
-        # Example: accessing query parameters
-        form = RecipeSearchForm(self.request.POST or None)
-        sales_df = None  # initialize dataframe to None 
-        # check if the button is clicked
-        if self.request.method == "POST":
-            # read book_title and chart_type
-            recipe = self.request.POST.get("ingredient_or_recipe")
-            search_mode = self.request.POST.get("search_mode")
-
-            # apply filter to extract data
-            qs = Recipe.objects.filter(title=recipe)
-            if qs:  # if data found
-                # convert the queryset values to pandas dataframe
-                sales_df = pd.DataFrame(qs.values())
-                # convert the ID to Name of book
-                sales_df["recipe_title"] = sales_df["recipe_title"].apply(
-                    get_recipe_from_title
-                )
-
-                sales_df = sales_df.to_html()
-
-        # Modify the queryset based on the request, if needed
         queryset = super().get_queryset()
-        # Additional queryset filtering or processing based on the request
+        form = self.get_form()
+
+        if form.is_valid():
+            recipe_name = form.cleaned_data.get("ingredient_or_recipe")
+            search_mode = form.cleaned_data.get("search_mode")
+
+            if search_mode == "#1":
+                # Filter recipes by the current user's recipes only
+                queryset = queryset.filter(
+                    user=self.request.user, title__icontains=recipe_name
+                )
+            elif search_mode == "#2":
+                queryset = queryset.filter(title__icontains=recipe_name)
+            elif search_mode == "#3":
+                # Show all recipes from all users
+                queryset = Recipe.objects.all()
+
+        for recipe in queryset:
+            recipe.title = get_recipe_from_title(recipe.title)
 
         return queryset
+
+    def form_valid(self, form):
+        return self.get(self.request)  # Refresh the page after form submission
 
 
 class RecipeListView(LoginRequiredMixin, ListView):

@@ -7,5 +7,5 @@ SEARCH__CHOICES = (  # specify choices as a tuple
 )
  
 class RecipeSearchForm(forms.Form):
-    ingredient_or_recipe = forms.CharField(max_length=150)
     search_mode = forms.ChoiceField(choices=SEARCH__CHOICES)
+    ingredient_or_recipe = forms.CharField(max_length=150)

@@ -23,10 +23,10 @@
                         {% csrf_token %}
 
                         {% comment %} print form received from view {% endcomment %}
-                        {{form}}
+                        {{ login_form.as_p }}
 
                         {% comment %} add button {% endcomment %}
-                        <button class="btn-primary" type="submit">Login</button>
+                        <button class="btn-primary" type="submit" name="login_btn">Login</button>
                     </form>
                 </section>
             </main>

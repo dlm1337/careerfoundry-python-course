@@ -19,14 +19,12 @@
                     <img class="img-fluid" style="width:240px; pointer-events: none;"
                         src="../../static/images/tomato-g820ca7bb9_640.png">
                 </div>
-                <div class="col-1"></div>
-                <div class="col-3">
-                    <form action="" method="POST">
+                <div class="col-5">
+                    <form action="{% url 'recipe:home' %}" method="post">
                         {% csrf_token %}
-                        {{form}}
-                        <button class="btn btn-primary" type="submit">search</button>
+                        {{ search_form.as_p }}
+                        <button class="btn btn-primary" type="submit" name="search_btn">Search</button>
                     </form>
-
                 </div>
                 <div class="col-3">
                     <div class="btn-group" role="group" aria-label="Button row" id="buttonContainer">
