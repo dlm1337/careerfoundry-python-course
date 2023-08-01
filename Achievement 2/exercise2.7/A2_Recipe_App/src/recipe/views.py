@@ -27,7 +27,7 @@ class RecipeHome(ListView, FormView):
     def get_queryset(self):
         queryset = super().get_queryset()
         form = self.get_form()
-
+        
         if form.is_valid():
             recipe_name = form.cleaned_data.get("ingredient_or_recipe")
             search_mode = form.cleaned_data.get("search_mode")
@@ -50,7 +50,6 @@ class RecipeHome(ListView, FormView):
 
     def form_valid(self, form):
         return self.get(self.request)  # Refresh the page after form submission
-
 
 class RecipeListView(LoginRequiredMixin, ListView):
     model = Recipe
