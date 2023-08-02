@@ -71,12 +71,16 @@ class RecipeSearchView(FormView):
 
         # Modify the DataFrame to include the image as an HTML img tag
         df["Picture"] = df["Picture"].apply(
-            lambda url: format_html('<img src="{}" height="100px" width="100px">', url)
+            lambda url: format_html('<img src="{}" width="200px">', url)
         )
 
         # Convert the modified DataFrame to HTML
         search_results_df = df.to_html(
             classes="table table-bordered table-hover", index=False, escape=False
+        )
+        # Manually add the table ID to the generated HTML
+        search_results_df = search_results_df.replace(
+            "<table", '<table id="search-results-table"'
         )
 
         context = {
