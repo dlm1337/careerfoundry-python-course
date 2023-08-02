@@ -4,7 +4,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import RecipeSearchForm
 import pandas as pd
 from .utils import get_recipe_from_title
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
+
+from django.utils.html import format_html
 
 
 class RecipeHome(ListView, FormView):
@@ -58,23 +60,30 @@ class RecipeSearchView(FormView):
     def form_valid(self, form):
         queryset = self.get_queryset(form)
 
-        # Convert the search results (queryset) into a Pandas DataFrame
+        # Convert the queryset to a DataFrame
         data = {
             "Recipe Title": [recipe.title for recipe in queryset],
-            "Other Columns": [
-                recipe.directions for recipe in queryset
-            ],  # Add other columns as needed
+            "Star Count": [recipe.star_count for recipe in queryset],
+            "Cooking Time": [recipe.cooking_time for recipe in queryset],
+            "Picture": [recipe.pic.url for recipe in queryset],
         }
         df = pd.DataFrame(data)
 
-        # Store the DataFrame in the context to access it in the template
-        self.extra_context = {
-            "search_results_df": df.to_html(
-                classes="table table-bordered table-hover", index=False
-            )
+        # Modify the DataFrame to include the image as an HTML img tag
+        df["Picture"] = df["Picture"].apply(
+            lambda url: format_html('<img src="{}" height="100px" width="100px">', url)
+        )
+
+        # Convert the modified DataFrame to HTML
+        search_results_df = df.to_html(
+            classes="table table-bordered table-hover", index=False, escape=False
+        )
+
+        context = {
+            "search_results_df": search_results_df,
         }
 
-        return self.render_to_response(self.get_context_data())
+        return render(self.request, self.template_name, context)
 
     def get_queryset(self, form):
         recipe_name = form.cleaned_data.get("ingredient_or_recipe")
@@ -94,13 +103,3 @@ class RecipeSearchView(FormView):
             queryset = queryset.filter(title__icontains=recipe_name)
 
         return queryset
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        # Check if the search results DataFrame is available in the extra context
-        if hasattr(self, "extra_context") and "search_results_df" in self.extra_context:
-            search_results_df = self.extra_context["search_results_df"]
-            context["search_results_df"] = search_results_df
-
-        return context
