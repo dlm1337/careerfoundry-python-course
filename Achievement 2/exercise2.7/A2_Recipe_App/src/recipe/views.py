@@ -1,3 +1,4 @@
+import json
 from django.views.generic import ListView, DetailView, FormView
 from .models import Recipe
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -60,6 +61,11 @@ class RecipeSearchView(FormView):
     def form_valid(self, form):
         queryset = self.get_queryset(form)
 
+        # Create a dictionary to store recipe titles and their absolute URLs
+        recipe_urls = {recipe.title: recipe.get_absolute_url() for recipe in queryset}
+        # Convert the recipe_urls dictionary to a JSON string
+        recipe_urls_json = json.dumps(recipe_urls)
+
         # Convert the queryset to a DataFrame
         data = {
             "Recipe Title": [recipe.title for recipe in queryset],
@@ -85,6 +91,7 @@ class RecipeSearchView(FormView):
 
         context = {
             "search_results_df": search_results_df,
+            "recipe_urls_json": recipe_urls_json,
         }
 
         return render(self.request, self.template_name, context)
