@@ -3,6 +3,7 @@ from recipe.models import Recipe  # you need to connect parameters from books mo
 from io import BytesIO
 import base64
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 # define a function that takes the ID
@@ -51,17 +52,49 @@ def get_chart(chart_type, data, **kwargs):
 
     # select chart_type based on user input from the form
     if chart_type == "#1":
-        # plot bar chart between ingredient names on x-axis and calorie content on y-axis
+        plt.title("Calorie Content per Ingredient")
         plt.bar(data.index, data["Calorie Content"])
+        plt.xlabel("Ingredient")
+        plt.ylabel("Calories")  # Label for the y-axis
+        plt.legend()
 
     elif chart_type == "#2":
-        # plot bar chart for grams per ingredient
+        plt.title("Grams per Ingredient")
         plt.plot(data.index, data["Grams"])
+        plt.xlabel("Ingredient")
+        plt.ylabel("Grams")  # Label for the y-axis
+        plt.legend()
 
     elif chart_type == "#3":
-        # plot pie chart for cost per ingredient
-        plt.pie(data["Cost"], labels=data.index)
+        plt.title("Cost per Ingredient")
 
+        # Create the pie chart and store the patches (slices) and text labels
+        patches, _, _ = plt.pie(data["Cost"], labels=None, autopct="%1.1f%%")
+
+        # Add ingredient name and cost amount to each slice as text labels
+        for patch, cost, ingredient in zip(patches, data["Cost"], data.index):
+            label = (
+                f"{ingredient}\n${cost:.2f}"  # Display ingredient name and cost amount
+            )
+
+            # Calculate the angle of the slice
+            angle = (patch.theta2 - patch.theta1) / 2.0 + patch.theta1
+
+            # Calculate the position of the label outside the pie chart
+            x = patch.r * 1.5 * np.cos(np.deg2rad(angle))
+            y = patch.r * 1.3 * np.sin(np.deg2rad(angle))
+
+            plt.text(
+                x,
+                y,
+                label,
+                ha="center",
+                va="center",
+                fontsize=10,
+                weight="bold",
+            )
+
+        plt.axis("equal")  # Equal aspect ratio ensures that pie is drawn as a circle
     else:
         print("unknown chart type")
 
