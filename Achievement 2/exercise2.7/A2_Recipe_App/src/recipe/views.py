@@ -4,7 +4,7 @@ from .models import Recipe
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import RecipeSearchForm
 import pandas as pd
-from .utils import get_recipe_from_title
+from .utils import get_recipe_from_title, get_chart
 from django.shortcuts import redirect, render
 
 from django.utils.html import format_html
@@ -52,6 +52,52 @@ class RecipeListView(LoginRequiredMixin, ListView):
 class RecipeDetailView(DetailView):
     model = Recipe
     template_name = "recipe/recipe_detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Extract ingredient names from the RecipeIngredient objects
+        ingredients = [
+            ing.ingredient.name for ing in context["object"].recipe_ingredients.all()
+        ]
+
+        # Create a dictionary with ingredient names as keys
+        ingredient_data = {ingredient: None for ingredient in ingredients}
+
+        df = pd.DataFrame.from_dict(
+            ingredient_data, orient="index", columns=["Calorie Content"]
+        )
+
+        # Set the 'Calorie Content' for each ingredient
+        for ing in context["object"].recipe_ingredients.all():
+            df.loc[ing.ingredient.name, "Calorie Content"] = ing.calorie_content
+
+        # Create new columns "Grams" and "Cost" and set their values
+        df["Grams"] = [ing.grams for ing in context["object"].recipe_ingredients.all()]
+        # Convert the "Cost" column to numeric values
+        for ing in context["object"].recipe_ingredients.all():
+            df.loc[ing.ingredient.name, "Cost"] = float(ing.cost)
+        # Convert the DataFrame to HTML
+        df_html = df.to_html(classes="table table-bordered table-hover", escape=False)
+
+        # Add the DataFrame HTML to the context
+        context["recipe_dataframe"] = df_html
+
+        # Get the chart HTML using the get_chart function for chart type #1
+        chart1 = get_chart("#1", df, x=df.index, y="Calorie Content")
+
+        # Get the chart HTML using the get_chart function for chart type #2
+        chart2 = get_chart("#2", df, x=df.index, y="Grams")
+
+        # Get the chart HTML using the get_chart function for chart type #3
+        chart3 = get_chart("#3", df, x=df.index, y="Cost")
+
+        # Add the chart HTML to the context
+        context["chart1"] = chart1
+        context["chart2"] = chart2
+        context["chart3"] = chart3
+
+        return context
 
 
 class RecipeSearchView(FormView):
