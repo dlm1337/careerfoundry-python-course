@@ -47,26 +47,36 @@ def get_chart(chart_type, data, **kwargs):
     # AGG is preferred solution to write PNG files
     plt.switch_backend("AGG")
 
+    # Set the default style for the plot
+    plt.rcParams["axes.facecolor"] = "#2ac549"
+    plt.rcParams["text.color"] = "black"
+
     # specify figure size
-    fig = plt.figure(figsize=(6, 3))
+    fig = plt.figure(figsize=(6, 3), facecolor="lightgray")
 
     # select chart_type based on user input from the form
     if chart_type == "#1":
-        plt.title("Calorie Content per Ingredient")
+        plt.title("Calorie Content per Ingredient", pad=30)
         plt.bar(data.index, data["Calorie Content"])
         plt.xlabel("Ingredient")
         plt.ylabel("Calories")  # Label for the y-axis
         plt.legend()
 
     elif chart_type == "#2":
-        plt.title("Grams per Ingredient")
+        plt.title("Grams per Ingredient", pad=30)
         plt.plot(data.index, data["Grams"])
         plt.xlabel("Ingredient")
         plt.ylabel("Grams")  # Label for the y-axis
         plt.legend()
 
     elif chart_type == "#3":
-        plt.title("Cost per Ingredient")
+        plt.title("Cost per Ingredient", pad=30)
+
+        # Remove the dollar sign from the "Cost" string
+        data["Cost"] = data["Cost"].str.replace("$", "")
+
+        # Convert the "Cost" column to numeric values
+        data["Cost"] = data["Cost"].astype(float)
 
         # Create the pie chart and store the patches (slices) and text labels
         patches, _, _ = plt.pie(data["Cost"], labels=None, autopct="%1.1f%%")

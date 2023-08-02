@@ -49,6 +49,10 @@ class RecipeListView(LoginRequiredMixin, ListView):
         return queryset
 
 
+def format_cost(cost):
+    return f"${cost:.2f}"
+
+
 class RecipeDetailView(DetailView):
     model = Recipe
     template_name = "recipe/recipe_detail.html"
@@ -68,31 +72,27 @@ class RecipeDetailView(DetailView):
             ingredient_data, orient="index", columns=["Calorie Content"]
         )
 
-        # Set the 'Calorie Content' for each ingredient
+        # Set the 'Calorie Content', 'Grams' for each ingredient
         for ing in context["object"].recipe_ingredients.all():
             df.loc[ing.ingredient.name, "Calorie Content"] = ing.calorie_content
 
-        # Create new columns "Grams" and "Cost" and set their values
         df["Grams"] = [ing.grams for ing in context["object"].recipe_ingredients.all()]
         # Convert the "Cost" column to numeric values
+        # Convert the "Cost" column to dollar format
         for ing in context["object"].recipe_ingredients.all():
-            df.loc[ing.ingredient.name, "Cost"] = float(ing.cost)
+            df.loc[ing.ingredient.name, "Cost"] = format_cost(float(ing.cost))
         # Convert the DataFrame to HTML
         df_html = df.to_html(classes="table table-bordered table-hover", escape=False)
 
-        # Add the DataFrame HTML to the context
+        # Manually add the table ID to the generated HTML
+        df_html = df_html.replace("<table", '<table id="ingredient-info-table"')
         context["recipe_dataframe"] = df_html
 
-        # Get the chart HTML using the get_chart function for chart type #1
+        # Get the chart HTML using the get_chart
         chart1 = get_chart("#1", df, x=df.index, y="Calorie Content")
-
-        # Get the chart HTML using the get_chart function for chart type #2
         chart2 = get_chart("#2", df, x=df.index, y="Grams")
-
-        # Get the chart HTML using the get_chart function for chart type #3
         chart3 = get_chart("#3", df, x=df.index, y="Cost")
 
-        # Add the chart HTML to the context
         context["chart1"] = chart1
         context["chart2"] = chart2
         context["chart3"] = chart3

@@ -16,37 +16,40 @@
                 </div>
                 <div class="row">
                     <div class="col-4"></div>
-                    <div class="col-4" style="text-align: left; justify-content: left; padding-bottom: 20px;">
+                    <div class="col-2" style="text-align: left; justify-content: left; padding-bottom: 20px;">
                         <br>
-                        <b>Provided By: </b>{{object.user}}
+                        <b class="card-title-style">Provided By: </b>{{object.user}}
                         <br>
-                        <b>Ingredients: </b>
+                        <b class="card-title-style">Ingredients: </b>
                         {% for ingredient in object.recipe_ingredients.all %}
                         {{ ingredient.ingredient }} - {{ ingredient.amount }} {{ ingredient.amount_type }}
                         {% if not forloop.last %}| {% endif %}
                         {% endfor %}
                         <br>
-                        <b>Directions: </b>{{object.directions}}
+                        <b class="card-title-style">Directions: </b>{{object.directions}}
                         <br>
-                        <b>Cooking Time: </b>{{object.cooking_time}} minutes
+                        <b class="card-title-style">Cooking Time: </b>{{object.cooking_time}} minutes
                         <br>
-                        <b>Difficulty: </b>{{object.calculate_difficulty}}
+                        <b class="card-title-style">Difficulty: </b>{{object.calculate_difficulty}}
+                    </div>
+                    <div class="col-2" style="text-align: left; justify-content: left; padding-bottom: 20px;">
+
                         <br>
-                        <b>Star Count: </b>{{object.star_count}} stars
+                        <b class="card-title-style">Star Count: </b>{{object.star_count}} stars
                         <br>
-                        <b>Recipe Type: </b>{{object.recipe_type}}
+                        <b class="card-title-style">Recipe Type: </b>{{object.recipe_type}}
                         <br>
-                        <b>Adapted Link: </b>{{object.adapted_link}}
+                        <b class="card-title-style">Adapted Link: </b>{{object.adapted_link}}
                         <br>
-                        <b>Servings: </b>{{object.servings}}
+                        <b class="card-title-style">Servings: </b>{{object.servings}}
                         <br>
-                        <b>Yield Amount: </b>{{object.yield_amount}}
+                        <b class="card-title-style">Yield Amount: </b>{{object.yield_amount}}
                         <br>
-                        <b>Allergens: </b>{{object.allergens}}
+                        <b class="card-title-style">Allergens: </b>{{object.allergens}}
                     </div>
                     <div class="col-4"></div>
                 </div>
-                <div class="row">
+                <div class="row recipe-dataframe-positioning">
                     {% if recipe_dataframe %}
                     <div class="table-responsive">
                         {% autoescape off %}
@@ -54,11 +57,11 @@
                         {% endautoescape %}
                     </div>
                     <br>
-                    <img src="data:image/png;base64, {{chart1|safe}}">
+                    <img src="data:image/png;base64, {{chart1|safe}}" class="chart-img">
                     <br>
-                    <img src="data:image/png;base64, {{chart2|safe}}">
+                    <img src="data:image/png;base64, {{chart2|safe}}" class="chart-img">
                     <br>
-                    <img src="data:image/png;base64, {{chart3|safe}}">
+                    <img src="data:image/png;base64, {{chart3|safe}}" class="chart-img">
                     {% endif %}
                 </div>
             </section>
@@ -66,4 +69,44 @@
     </div>
 </div>
 </div>
+{% endblock %}
+
+{% block welcome_script %}
+<style>
+    .recipe-dataframe-positioning {
+        padding: 40px;
+    }
+
+    .chart-img {
+        padding: 30px;
+    }
+
+    #ingredient-info-table {
+        background-color: #132e18;
+        color: white;
+    }
+
+    #ingredient-info-table th {
+        color: #632623;
+        background-color: #f8a19e;
+        text-align: center;
+        align-items: center;
+    }
+
+    #ingredient-info-table td {
+        text-align: center;
+        align-items: center;
+    }
+
+    #ingredient-info-table td {
+        text-align: center;
+        align-items: center;
+        color: white;
+    }
+
+    tr:hover {
+        background-color: #2ac549;
+    }
+</style>
+
 {% endblock %}
