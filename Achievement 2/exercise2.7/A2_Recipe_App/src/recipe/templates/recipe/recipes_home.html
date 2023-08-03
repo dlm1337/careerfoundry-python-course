@@ -143,6 +143,7 @@
     {% endblock %}
 
     {% block welcome_script %}
+    {% if not user.is_authenticated %}
     <div id="signUpPopoverContent" style="display: none;">
         <div>
             <h3>Register</h3>
@@ -169,6 +170,7 @@
             initializePopover();
         });
     </script>
+    {% endif %}
     {% endblock %}
 </body>
 

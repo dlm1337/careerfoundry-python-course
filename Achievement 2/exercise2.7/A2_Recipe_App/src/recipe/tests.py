@@ -8,6 +8,7 @@ from ingredient.models import Ingredient
 from recipeingredientintermediary.models import RecipeIngredientIntermediary
 from django.core.files import File
 from customuser.models import CustomUser
+from .forms import RecipeSearchForm
 
 # Create your tests here.
 
@@ -146,7 +147,7 @@ class RecipeModelTest(TestCase):
         recipe2 = Recipe.objects.get(id=3)
         self.assertEqual(recipe1.id, 2)
         self.assertEqual(recipe2.id, 3)
- 
+
     def test_recipe_cooking_time_not_negative(self):
         recipe = Recipe(cooking_time=-10)
         with self.assertRaises(ValidationError):
@@ -249,3 +250,52 @@ class RecipeModelTest(TestCase):
         expected_pic_path = expected_pic_path.replace("\\", "/")
 
         self.assertEqual(recipe.pic.name, expected_pic_path)
+
+
+class RecipeFormTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.form_data_valid = {
+            "search_mode": "#1",
+            "ingredient_or_recipe": "Recipe Name",
+        }
+        cls.form_data_invalid = {
+            "search_mode": "#4",  # An invalid choice
+            "ingredient_or_recipe": "Recipe Name",
+        }
+        cls.form_data_blank_search_mode = {
+            "search_mode": "",  # An empty choice
+            "ingredient_or_recipe": "Recipe Name",
+        }
+        cls.form_data_blank_ingredient = {
+            "search_mode": "#3",
+            "ingredient_or_recipe": "",  # Blank input for "#3" search mode
+        }
+
+    def test_valid_search_mode(self):
+        form = RecipeSearchForm(data=self.form_data_valid)
+        # verify the form fields values and check for validation errors
+        self.assertTrue(
+            form.is_valid(), "Form should be valid with a valid search mode"
+        )
+        self.assertEqual(form.cleaned_data["search_mode"], "#1")
+        self.assertEqual(form.cleaned_data["ingredient_or_recipe"], "Recipe Name")
+
+    def test_invalid_search_mode(self):
+        form = RecipeSearchForm(data=self.form_data_invalid)
+        # verify the form fields values and check for validation errors
+        self.assertFalse(form.is_valid())
+        self.assertIn("search_mode", form.errors)
+
+    def test_blank_search_mode(self):
+        form = RecipeSearchForm(data=self.form_data_blank_search_mode)
+        # verify the form fields values and check for validation errors
+        self.assertFalse(form.is_valid())
+        self.assertIn("search_mode", form.errors)
+
+    def test_blank_ingredient_or_recipe(self):
+        form = RecipeSearchForm(data=self.form_data_blank_ingredient)
+        # verify the form fields values and check for validation errors
+        self.assertTrue(form.is_valid())
+        self.assertEqual(form.cleaned_data["search_mode"], "#3")
+        self.assertEqual(form.cleaned_data["ingredient_or_recipe"], "")
