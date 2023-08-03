@@ -6,7 +6,6 @@ from .forms import RecipeSearchForm
 import pandas as pd
 from .utils import get_recipe_from_title, get_chart
 from django.shortcuts import redirect, render
-
 from django.utils.html import format_html
 
 
@@ -81,6 +80,7 @@ class RecipeDetailView(DetailView):
         # Convert the "Cost" column to dollar format
         for ing in context["object"].recipe_ingredients.all():
             df.loc[ing.ingredient.name, "Cost"] = format_cost(float(ing.cost))
+
         # Convert the DataFrame to HTML
         df_html = df.to_html(classes="table table-bordered table-hover", escape=False)
 
@@ -143,7 +143,7 @@ class RecipeSearchView(FormView):
         return render(self.request, self.template_name, context)
 
     def get_queryset(self, form):
-        recipe_name = form.cleaned_data.get("ingredient_or_recipe")
+        recipe_or_ingredient = form.cleaned_data.get("ingredient_or_recipe")
         search_mode = form.cleaned_data.get("search_mode")
 
         if search_mode == "#1" and not self.request.user.is_authenticated:
@@ -153,10 +153,32 @@ class RecipeSearchView(FormView):
 
         if search_mode == "#1":
             # Filter recipes by the current user's recipes only
-            queryset = queryset.filter(
-                user=self.request.user, title__icontains=recipe_name
+            queryset = Recipe.objects.filter(
+                user=self.request.user, title__icontains=recipe_or_ingredient
             )
+            if recipe_or_ingredient.strip():
+                if not queryset.exists():
+                    # Filter recipes by the ingredient name
+                    queryset = Recipe.objects.filter(
+                        user=self.request.user,
+                        recipe_ingredients__ingredient__name__icontains=recipe_or_ingredient,
+                    )
+            else:
+                queryset = Recipe.objects.none()
+
         elif search_mode == "#2":
-            queryset = queryset.filter(title__icontains=recipe_name)
+            # Only filter if the search bar is not blank
+            if recipe_or_ingredient.strip():
+                queryset = Recipe.objects.filter(title__icontains=recipe_or_ingredient)
+                if not queryset.exists():
+                    # Filter recipes by the ingredient name
+                    queryset = Recipe.objects.filter(
+                        recipe_ingredients__ingredient__name__icontains=recipe_or_ingredient
+                    )
+            else:
+                queryset = Recipe.objects.none()
+
+        elif search_mode == "#3":
+            queryset = Recipe.objects.all()
 
         return queryset

@@ -9,8 +9,12 @@
         <main>
             <section class="container" style="color: white;">
                 <div class="row">
-                    <div class="col-12 card-title-style" style="text-align: center; justify-content: center;">
-                        <h1><b>{{object.title}}</b></h1>
+                    <div class="col-12" style="text-align: center; justify-content: center;">
+                        <h1 class="card-title-underline card-title-style"><b>{{object.title}}</b></h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12" style="text-align: center; justify-content: center;">
                         <img src="{{object.pic.url}}" style="padding-bottom: 6px; width: 400px;" />
                     </div>
                 </div>
@@ -49,21 +53,40 @@
                     </div>
                     <div class="col-4"></div>
                 </div>
+                {% if recipe_dataframe %}
+                <div class="row">
+                    <div class="col-12" style="text-align: center; justify-content: center;">
+                        <h1 class="card-title-style card-title-underline">
+                            <b>Ingredient
+                                Info</b>
+                        </h1>
+                    </div>
+
+                </div>
                 <div class="row recipe-dataframe-positioning">
-                    {% if recipe_dataframe %}
                     <div class="table-responsive">
                         {% autoescape off %}
                         {{ recipe_dataframe | safe }}
                         {% endautoescape %}
                     </div>
-                    <br>
+                </div>
+                <div class="row">
+                    <div class="col-12" style="text-align: center; justify-content: center;">
+                        <h1 class="card-title-style card-title-underline" >
+                            <b>Ingredient Analysis</b>
+                        </h1>
+                    </div>
+
+                </div>
+                <div class="row">
                     <img src="data:image/png;base64, {{chart1|safe}}" class="chart-img">
                     <br>
                     <img src="data:image/png;base64, {{chart2|safe}}" class="chart-img">
                     <br>
                     <img src="data:image/png;base64, {{chart3|safe}}" class="chart-img">
-                    {% endif %}
                 </div>
+                {% endif %}
+                <br>
             </section>
         </main>
     </div>
@@ -74,11 +97,15 @@
 {% block welcome_script %}
 <style>
     .recipe-dataframe-positioning {
-        padding: 40px;
+        padding-left: 56px;
+        padding-right: 56px;
+        padding-top: 10px;
     }
 
     .chart-img {
-        padding: 30px;
+        padding-left: 60px;
+        padding-right: 60px;
+        padding-top: 20px;
     }
 
     #ingredient-info-table {

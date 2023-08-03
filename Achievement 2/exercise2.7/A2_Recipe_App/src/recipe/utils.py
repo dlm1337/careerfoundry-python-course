@@ -1,5 +1,4 @@
 from recipe.models import Recipe  # you need to connect parameters from books model
-
 from io import BytesIO
 import base64
 import matplotlib.pyplot as plt
@@ -48,29 +47,31 @@ def get_chart(chart_type, data, **kwargs):
     plt.switch_backend("AGG")
 
     # Set the default style for the plot
-    plt.rcParams["axes.facecolor"] = "#2ac549"
-    plt.rcParams["text.color"] = "black"
+    plt.rcParams["axes.facecolor"] = "lightgray"
+    plt.rcParams["text.color"] = "#632623"
 
     # specify figure size
-    fig = plt.figure(figsize=(6, 3), facecolor="lightgray")
+    fig = plt.figure(figsize=(6, 3), facecolor="#2ac549")
 
     # select chart_type based on user input from the form
     if chart_type == "#1":
-        plt.title("Calorie Content per Ingredient", pad=30)
-        plt.bar(data.index, data["Calorie Content"])
-        plt.xlabel("Ingredient")
-        plt.ylabel("Calories")  # Label for the y-axis
-        plt.legend()
+        plt.title("Calorie Content per Ingredient", pad=26)
+        plt.bar(
+            data.index, data["Calorie Content"], label="Calorie Content"
+        )  # Add label
+        plt.xlabel("Ingredient", color="#632623")
+        plt.ylabel("Calories", color="#632623")
+        plt.legend()  # This will now show the legend with the "Calorie Content" label.
 
     elif chart_type == "#2":
-        plt.title("Grams per Ingredient", pad=30)
-        plt.plot(data.index, data["Grams"])
-        plt.xlabel("Ingredient")
-        plt.ylabel("Grams")  # Label for the y-axis
-        plt.legend()
+        plt.title("Grams per Ingredient", pad=26)
+        plt.plot(data.index, data["Grams"], label="Grams")  # Add label
+        plt.xlabel("Ingredient", color="#632623")
+        plt.ylabel("Grams", color="#632623")
+        plt.legend()  # This will now show the legend with the "Grams" label.
 
     elif chart_type == "#3":
-        plt.title("Cost per Ingredient", pad=30)
+        plt.title("Cost per Ingredient", pad=36)
 
         # Remove the dollar sign from the "Cost" string
         data["Cost"] = data["Cost"].str.replace("$", "")
