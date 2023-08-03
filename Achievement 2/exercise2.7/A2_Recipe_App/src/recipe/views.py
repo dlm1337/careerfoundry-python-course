@@ -9,22 +9,9 @@ from django.shortcuts import redirect, render
 from django.utils.html import format_html
 
 
-class RecipeHome(ListView, FormView):
+class RecipeHome(ListView):
     model = Recipe
     template_name = "recipe/recipes_home.html"
-    context_object_name = "recipes"
-    form_class = RecipeSearchForm
-    success_url = "/"
-
-    def dispatch(self, request, *args, **kwargs):
-        form = self.get_form()
-        if form.is_valid():
-            search_mode = form.cleaned_data.get("search_mode")
-
-            if search_mode == "#1" and not request.user.is_authenticated:
-                return redirect("login")
-
-        return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -71,14 +58,10 @@ class RecipeDetailView(DetailView):
             ingredient_data, orient="index", columns=["Calorie Content"]
         )
 
-        # Set the 'Calorie Content', 'Grams' for each ingredient
+        # Set the 'Calorie Content', 'Grams' and 'Cost' for each ingredient
         for ing in context["object"].recipe_ingredients.all():
             df.loc[ing.ingredient.name, "Calorie Content"] = ing.calorie_content
-
-        df["Grams"] = [ing.grams for ing in context["object"].recipe_ingredients.all()]
-        # Convert the "Cost" column to numeric values
-        # Convert the "Cost" column to dollar format
-        for ing in context["object"].recipe_ingredients.all():
+            df.loc[ing.ingredient.name, "Grams"] = ing.grams
             df.loc[ing.ingredient.name, "Cost"] = format_cost(float(ing.cost))
 
         # Convert the DataFrame to HTML
@@ -143,7 +126,7 @@ class RecipeSearchView(FormView):
         return render(self.request, self.template_name, context)
 
     def get_queryset(self, form):
-        recipe_or_ingredient = form.cleaned_data.get("ingredient_or_recipe")
+        search = form.cleaned_data.get("search")
         search_mode = form.cleaned_data.get("search_mode")
 
         if search_mode == "#1" and not self.request.user.is_authenticated:
@@ -154,26 +137,26 @@ class RecipeSearchView(FormView):
         if search_mode == "#1":
             # Filter recipes by the current user's recipes only
             queryset = Recipe.objects.filter(
-                user=self.request.user, title__icontains=recipe_or_ingredient
+                user=self.request.user, title__icontains=search
             )
-            if recipe_or_ingredient.strip():
+            if search.strip():
                 if not queryset.exists():
                     # Filter recipes by the ingredient name
                     queryset = Recipe.objects.filter(
                         user=self.request.user,
-                        recipe_ingredients__ingredient__name__icontains=recipe_or_ingredient,
+                        recipe_ingredients__ingredient__name__icontains=search,
                     )
             else:
                 queryset = Recipe.objects.none()
 
         elif search_mode == "#2":
             # Only filter if the search bar is not blank
-            if recipe_or_ingredient.strip():
-                queryset = Recipe.objects.filter(title__icontains=recipe_or_ingredient)
+            if search.strip():
+                queryset = Recipe.objects.filter(title__icontains=search)
                 if not queryset.exists():
                     # Filter recipes by the ingredient name
                     queryset = Recipe.objects.filter(
-                        recipe_ingredients__ingredient__name__icontains=recipe_or_ingredient
+                        recipe_ingredients__ingredient__name__icontains=search
                     )
             else:
                 queryset = Recipe.objects.none()

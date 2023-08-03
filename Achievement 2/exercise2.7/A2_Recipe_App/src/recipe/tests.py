@@ -1,6 +1,7 @@
+import json
 import os
 import uuid
-from django.test import TestCase, Client, override_settings
+from django.test import TestCase, override_settings, Client
 from .models import Recipe
 from django.core.exceptions import ValidationError
 from recipeingredient.models import RecipeIngredient
@@ -9,6 +10,14 @@ from recipeingredientintermediary.models import RecipeIngredientIntermediary
 from django.core.files import File
 from customuser.models import CustomUser
 from .forms import RecipeSearchForm
+from django.urls import reverse
+from .utils import get_recipe_from_title
+from unittest.mock import patch
+from pandas import DataFrame
+from recipe.views import format_cost
+
+import pandas as pd
+
 
 # Create your tests here.
 
@@ -257,19 +266,19 @@ class RecipeFormTest(TestCase):
     def setUpTestData(cls):
         cls.form_data_valid = {
             "search_mode": "#1",
-            "ingredient_or_recipe": "Recipe Name",
+            "search": "Recipe Name",
         }
         cls.form_data_invalid = {
             "search_mode": "#4",  # An invalid choice
-            "ingredient_or_recipe": "Recipe Name",
+            "search": "Recipe Name",
         }
         cls.form_data_blank_search_mode = {
             "search_mode": "",  # An empty choice
-            "ingredient_or_recipe": "Recipe Name",
+            "search": "Recipe Name",
         }
         cls.form_data_blank_ingredient = {
             "search_mode": "#3",
-            "ingredient_or_recipe": "",  # Blank input for "#3" search mode
+            "search": "",  # Blank input for "#3" search mode
         }
 
     def test_valid_search_mode(self):
@@ -279,7 +288,7 @@ class RecipeFormTest(TestCase):
             form.is_valid(), "Form should be valid with a valid search mode"
         )
         self.assertEqual(form.cleaned_data["search_mode"], "#1")
-        self.assertEqual(form.cleaned_data["ingredient_or_recipe"], "Recipe Name")
+        self.assertEqual(form.cleaned_data["search"], "Recipe Name")
 
     def test_invalid_search_mode(self):
         form = RecipeSearchForm(data=self.form_data_invalid)
@@ -293,9 +302,196 @@ class RecipeFormTest(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn("search_mode", form.errors)
 
-    def test_blank_ingredient_or_recipe(self):
+    def test_blank_search(self):
         form = RecipeSearchForm(data=self.form_data_blank_ingredient)
         # verify the form fields values and check for validation errors
         self.assertTrue(form.is_valid())
         self.assertEqual(form.cleaned_data["search_mode"], "#3")
-        self.assertEqual(form.cleaned_data["ingredient_or_recipe"], "")
+        self.assertEqual(form.cleaned_data["search"], "")
+
+
+class RecipeViewTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = CustomUser.objects.create_user(
+            username="testuser", email="testuser@example.com", password="testpassword"
+        )
+        cls.recipe = Recipe.objects.create(
+            title="Nachos",
+            directions="Put nachos on a plate with cheese, cook in microwave. Add sour cream, jalapenos, salsa, and lettuce.",
+            cooking_time=3,
+            star_count=5,
+            recipe_type="snack",
+            adapted_link="https://nachos.com",
+            servings=3,
+            yield_amount=12,
+            allergens="unknown",
+            user=cls.user,  # Associate the user with the recipe
+            pic="no_picture.jpg",
+        )
+        RecipeIngredient.objects.create(
+            recipe=cls.recipe,
+            ingredient=Ingredient.objects.create(name="Ingredient 1"),
+            calorie_content=20,
+            amount=1.5,
+            amount_type="cup",
+            cost=20.40,
+            supplier="supplier",
+            grams=20.22,
+        )
+
+        RecipeIngredient.objects.create(
+            recipe=cls.recipe,
+            ingredient=Ingredient.objects.create(name="Ingredient 2"),
+            calorie_content=10,
+            amount=0.5,
+            amount_type="teaspoon",
+            cost=5.10,
+            supplier="supplier",
+            grams=5.25,
+        )
+
+        RecipeIngredient.objects.create(
+            recipe=cls.recipe,
+            ingredient=Ingredient.objects.create(name="Ingredient 3"),
+            calorie_content=30,
+            amount=2,
+            amount_type="tablespoon",
+            cost=10.15,
+            supplier="supplier",
+            grams=25.50,
+        )
+
+        cls.recipe = Recipe.objects.get(id=1)
+
+    def test_recipe_home_view(self):
+        response = self.client.get(reverse("recipe:home"))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "recipe/recipes_home.html")
+        self.assertContains(response, "Nachos")
+
+    def test_recipe_home_view_with_custom_title(self):
+        # Modify the recipe title with the custom function
+        self.recipe.title = get_recipe_from_title(self.recipe.title)
+
+        response = self.client.get(reverse("recipe:home"))
+        self.assertContains(response, self.recipe.title)
+
+    def test_recipe_list_view_authenticated_user(self):
+        self.client.login(username="testuser", password="testpassword")
+        response = self.client.get(reverse("recipe:list"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Nachos")
+
+    def test_recipe_list_view_anonymous_user(self):
+        self.client.logout()
+        response = self.client.get(reverse("recipe:list"))
+        self.assertEqual(response.status_code, 302)
+        # Redirects to the login page as expected for an anonymous user
+
+    @staticmethod
+    def mock_get_chart(*args, **kwargs):
+        return "<div>Mocked Chart</div>"
+
+    def test_recipe_detail_view(self):
+        # ... Existing test setup ...
+
+        # Mock DataFrame data
+        data = {
+            "Ingredient": ["Ingredient 1", "Ingredient 2", "Ingredient 3"],
+            "Calorie Content": [20, 10, 30],
+            "Grams": [20.22, 5.25, 25.50],
+            "Cost": ["$20.40", "$5.10", "$10.15"],
+        }
+
+        # Convert the data into a DataFrame
+        mock_df = DataFrame(data)
+
+        # Set the DataFrame as the mocked DataFrame to be returned by the mock function
+        with patch("recipe.views.get_chart", side_effect=self.mock_get_chart), patch(
+            "recipe.views.pd.DataFrame.from_dict", return_value=mock_df
+        ):
+            url = reverse("recipe:detail", kwargs={"pk": self.recipe.pk})
+            response = self.client.get(url)
+
+            # Check if the view returns a 200 status code
+            self.assertEqual(response.status_code, 200)
+
+            # Check if the recipe title is present in the response
+            self.assertContains(response, self.recipe.title)
+
+            # Check if the ingredient names are present in the response
+            for ing in self.recipe.recipe_ingredients.all():
+                self.assertContains(response, ing.ingredient.name)
+
+            # Check if the calorie content, grams, and cost are present in the response
+            for ing in self.recipe.recipe_ingredients.all():
+                self.assertContains(response, str(ing.calorie_content))
+                self.assertContains(
+                    response, str(round(ing.grams, 2))
+                )  # Use round function
+                self.assertContains(response, format_cost(float(ing.cost)))
+
+            # Check if the DataFrame data is present in the response
+            for col in data.keys():
+                for value in data[col]:
+                    self.assertContains(response, str(value))  # Convert value to string
+
+            # Check if the charts are present in the response
+            self.assertContains(response, "<div>Mocked Chart</div>")
+
+    @patch("recipe.views.RecipeSearchView.get_queryset")
+    @patch("recipe.views.pd.DataFrame.from_dict")
+    def test_recipe_search_view(self, mock_from_dict, mock_get_queryset):
+        # Mock the queryset returned by get_queryset method
+        mock_get_queryset.return_value = [self.recipe]
+
+        # Mock the DataFrame returned by pd.DataFrame.from_dict
+        df_data = {
+            "Recipe Title": [self.recipe.title],
+            "Star Count": [self.recipe.star_count],
+            "Cooking Time": [self.recipe.cooking_time],
+            "Picture": [self.recipe.pic.url],
+        }
+        mock_df = pd.DataFrame(df_data)
+        mock_df["Picture"] = mock_df["Picture"].apply(
+            lambda url: f'<img src="{url}" width="200px">'
+        )
+        mock_from_dict.return_value = mock_df
+
+        url = reverse("recipe:search")
+        search_data = {"search": "Nachos", "search_mode": "#2"}
+        response = self.client.post(url, search_data)
+
+        # Check that the response status code is 200
+        self.assertEqual(response.status_code, 200)
+
+        # Check that the correct template is used
+        self.assertTemplateUsed(response, "recipe/search.html")
+
+        # Check that the form used in the view is the correct form
+        self.assertIsInstance(response.context["form"], RecipeSearchForm)
+
+        # Check that the recipe data is present in the response
+        self.assertContains(response, "Nachos")
+
+        # Check that the JSON data for recipe URLs is present in the response
+        self.assertIn("recipe_urls_json", response.context)
+        recipe_urls_json = response.context["recipe_urls_json"]
+        recipe_urls_dict = json.loads(recipe_urls_json)
+        self.assertEqual(
+            recipe_urls_dict[self.recipe.title], self.recipe.get_absolute_url()
+        )
+
+        # Check that the DataFrame HTML is present in the response
+        self.assertIn("search_results_df", response.context)
+        search_results_df = response.context["search_results_df"]
+        expected_table = mock_df.to_html(
+            classes="table table-bordered table-hover", index=False, escape=False
+        )
+
+        # Check if each cell of the expected table is present in the response
+        for cell in expected_table.split():
+            if cell.startswith("<img"):  # Ignore the img tag modification
+                continue
+            self.assertContains(response, cell.strip())
