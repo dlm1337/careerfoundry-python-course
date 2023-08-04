@@ -129,10 +129,11 @@
             <li><button class="btn btn-primary left-nav-button" type="submit">Create</button></li>
             <li><button class="btn btn-primary left-nav-button" type="submit">Edit</button></li>
             {% if user.is_authenticated %}
-            <li><a href="/list" class="btn btn-primary left-nav-button" type="submit">Your Recipes</a></li>
+            <li><a href="/your_recipes" class="btn btn-primary left-nav-button" type="submit">Your Recipes</a></li>
 
             {% else %}
-            <li><a href="/list" class="btn btn-primary left-nav-button" type="submit" hidden>Your Recipes</a></li>
+            <li><a href="/your_recipes" class="btn btn-primary left-nav-button" type="submit" hidden>Your Recipes</a>
+            </li>
 
             {% endif %}
             </li>

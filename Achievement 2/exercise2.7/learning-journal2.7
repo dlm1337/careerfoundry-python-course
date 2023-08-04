@@ -13,11 +13,79 @@ Reflection Questions
     website/application. 
 
 
+        I will use Amazon as an example of how it may use the collected data from user interactions. Amazon can look
+        at purchase history and dates of item purchasing. They can use this data to determine what seasons are good
+        for certain things, as well as what is currently popular. They have access to purchase history to observe
+        and gather customer interests. They have access to information about shipping, allowing Amazon to know
+        what is popular in certain areas. All of these things help Amazon to control it's inventory. Analyzing
+        customer data also helps to determine pricing. Amazon can optimize it's website as well through studying
+        user interactions, putting commonly searched/purchased materials towards the front of things. Overall, 
+        collected/analyzed data helps amazon to predict future needs of customers and improve advertising/company
+        image.
+
 
 2.	Read the Django official documentation on QuerySet API. Note down the different ways in which you can evaluate 
     a QuerySet.
 
+        Iteration: You can evaluate the QuerySet inside of a loop. The QuerySet is executed on the 1st iteration.
+
+        Async Iteration: using async keyword on a loop allows the QuerySet to execute asynchronously. Good for
+        potentially slower operations, allowing other operations to continue.
+
+        Slicing: You can use pythons array slicing syntax to slice a QuerySet, which returns another query section
+        that is still no evaluated. Adding the step argument to the slice syntax executes the QuerySet and a list
+        will be returned.
+
+        Pickling/Caching: You can use Pickles to evaluate a QuerySet into a byte stream. It will save the results 
+        and pre-load all results into memory. Often pickles are used for caching, so it can re-load certain things 
+        without having to query the database.
+
+        repr(): using repr() on a Queryset will immediately evaluate it. This will tell more about the object in a8b6
+        string representation. You can recreate the object using python code if you need to.
+      
+        len(): using the len() function on your QuerySet will evaluate it immediately. The length of to QuerySet will
+        be returned.
+
+        list(): calling the list function in a querySet will evaluate the query set into a list. This is helpful 
+        when you want to work with the data as a python list, which allows for more options of data manipulation.
+        Sometimes using list can speed up data retrieval that is lazily loaded through querySet, and having a8b6
+        python list allows for complex computations.
+
+        bool(): Putting the QuerySet in a conditional statement will evaluate it(using if, or, and, elif).
+
+
+        reference: https://docs.djangoproject.com/en/4.2/ref/models/querysets/
 
 
 3.	In the Exercise, you converted your QuerySet to DataFrame. Now do some research on the advantages and 
     disadvantages of QuerySet and DataFrame, and explain the ways in which DataFrame is better for data processing.
+
+
+        QuerySet Advantages: Access to Django built in features such as authentication. The ORM is pretty easy to
+        use and the ORM QuerySet's are tightly tied to the database. Transactions are seamless and ensure data 
+        integrity.
+
+        QuerySet Disadvantages: There are limitations to data processing. The QuerySet is designed for querying the
+        database, not complex logic that is easier with python collections/libraries. It is not good for complex
+        aggregations, joins, or forming data in a way suited for data analytics.
+
+        DataFrame Advantages: Dataframes such as pandas provide powerful tools for data manipulation. They are great
+        for data intergration through many formats(for example: CSV, JSON). Dataframes are performance optimized for
+        performing complex logic for data analytics, using in memory data processing. They also works well with 
+        various machine learning libraries for data analysis. Also, they usually come with many quick visualization
+        options and 3rd party supported libraries. 
+
+        DataFrame Disadvantages: Dataframes do not have access to Django security features, nor does it intergrate
+        with the ORM. This may cause potential problems, or require difficult tasks to sync with the database model.
+        The syntax of dataframes can often be considered difficult, and require much learning to understand with
+        limited documentation.
+
+        Why it is better for data processing: Dataframes are better for data processing due to its vast tool set
+        for customizing/editing your data. Since the data is in memory it does not require multiple queries or
+        SQL straining data manipulations. In most dataframes the operations are vectorized which enhances performance.
+        Overall, dataframes offer a rich API that makes data manipulation/visulizations quick even with complex
+        data transformations.
+
+
+        references: https://data-flair.training/blogs/advantages-of-python-pandas/
+                    https://ilovedjango.com/django/orm/understanding-the-django-orm-object-relational-mapping/ 

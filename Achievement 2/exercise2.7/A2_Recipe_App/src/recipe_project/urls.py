@@ -32,7 +32,7 @@ urlpatterns = [
     path("login/", login_view, name="login"),
     path("logout/", logout_view, name="logout"),
     path("register/", register_user, name="register"),  # Add this URL pattern
-    path("your-profile/", your_profile, name="your_profile"),
+    path("your_profile/", your_profile, name="your_profile"),
     path("success/", success, name="success"),
 ]
 

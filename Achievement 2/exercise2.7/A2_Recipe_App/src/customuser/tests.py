@@ -1,8 +1,10 @@
 import os
 import uuid
+from .forms import CustomUserCreationForm
 from django.test import TestCase, override_settings
 from .models import CustomUser
 from django.core.files import File
+from django.shortcuts import reverse
 
 
 class CustomUserModelTest(TestCase):
@@ -65,3 +67,50 @@ class CustomUserModelTest(TestCase):
         self.assertEqual(user.username, "newuser")
         self.assertEqual(user.email, "newuser@example.com")
         self.assertTrue(user.check_password("newpassword"))
+
+    def test_success_view(self):
+        # Test GET request to the success view
+        response = self.client.get(reverse("success"))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "customuser/success.html")
+
+
+class CustomUserViewTest(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        # Create a test user for the model
+        cls.test_user = CustomUser.objects.create_user(
+            username="testuser",
+            email="testuser@example.com",
+            password="testpassword",
+            about_me="I am a test user.",
+            favorite_food="Pizza",
+        )
+
+    def test_register_user_view(self):
+        # Test GET request to the register_user view
+        response = self.client.get(reverse("register"))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "customuser/register.html")
+        self.assertIsInstance(response.context["form"], CustomUserCreationForm)
+
+        # Test POST request with valid data
+        data = {
+            "username": "testuser",
+            "email": "testuser@example.com",
+            "password1": "testpassword123",
+            "password2": "testpassword123",
+            "about_me": "I am a test user.",
+            "favorite_food": "Pizza",
+            "submit_type": "register_btn",
+        }
+        response = self.client.post(reverse("register"), data, follow=True)
+
+        # Ensure that the user is created in the database
+        self.assertTrue(CustomUser.objects.filter(username="testuser").exists())
+
+        # Test POST request with invalid data
+        data["username"] = ""  # Blank username should be invalid
+        response = self.client.post(reverse("register"), data)
+        self.assertContains(response, "This field is required.", status_code=200)

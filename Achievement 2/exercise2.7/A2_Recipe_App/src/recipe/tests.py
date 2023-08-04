@@ -180,7 +180,7 @@ class RecipeModelTest(TestCase):
     def test_get_absolute_url(self):
         # testing details page link.
         recipe = Recipe.objects.get(id=1)
-        self.assertEqual(recipe.get_absolute_url(), "/list/1")
+        self.assertEqual(recipe.get_absolute_url(), "/detail/1")
 
     def test_home_page_link(self):
         # testing home page.
@@ -379,13 +379,13 @@ class RecipeViewTest(TestCase):
 
     def test_recipe_list_view_authenticated_user(self):
         self.client.login(username="testuser", password="testpassword")
-        response = self.client.get(reverse("recipe:list"))
+        response = self.client.get(reverse("recipe:your_recipes"))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Nachos")
 
     def test_recipe_list_view_anonymous_user(self):
         self.client.logout()
-        response = self.client.get(reverse("recipe:list"))
+        response = self.client.get(reverse("recipe:your_recipes"))
         self.assertEqual(response.status_code, 302)
         # Redirects to the login page as expected for an anonymous user
 

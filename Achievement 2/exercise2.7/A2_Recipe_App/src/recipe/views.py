@@ -22,9 +22,9 @@ class RecipeHome(ListView):
         return queryset
 
 
-class RecipeListView(LoginRequiredMixin, ListView):
+class YourRecipesView(LoginRequiredMixin, ListView):
     model = Recipe
-    template_name = "recipe/recipe_list.html"
+    template_name = "recipe/your_recipes.html"
 
     def get_queryset(self):
         ## function get_queryset is automatically called by ListView and get the request

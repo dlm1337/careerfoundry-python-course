@@ -39,6 +39,9 @@ This repository contains exercises and scripts for the CareerFoundry Python cour
 - [Exercise_2.6](#exercise_26)
   - [Installation](#exercise_26-installation)
   - [Usage](#exercise_26-usage)
+- [Exercise_2.7](#exercise_27)
+  - [Installation](#exercise_27-installation)
+  - [Usage](#exercise_27-usage)
 - [Authors](#authors)
 - [Acknowledgments](#acknowledgments)
  
@@ -378,6 +381,43 @@ testing to account for the customUser model. The CustomUser model inherits the D
 add additional attributes/extend the functionality. 
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
+
+## Exercise_2.7
+
+Updated the application to include data analytics using pandas and Matplotlib. Also made recipe/ingredient/partial
+searching. The searches lead you to a page with table data representing the recipes. Clicking the recipe will lead
+to the details page. 
+
+------------------------------------------------------------------------------------------------------------------------
+
+### Exercise_2.7-Installation
+
+To install and run the scripts, follow these steps:
+
+1. Ensure you have Python 3.8.7
+2. Create a virtual environment.
+3. Activate the virtual environments in the terminal.
+4. Navigate to A2_Recipe_App\src
+5. Install django, pip install pandas, matplotlib
+6. Make migrations.
+7. Migrate.
+8. Make superuser.
+9. Run server and copy url.
+10. Copy the url to your browser and it takes you to the home page.
+
+------------------------------------------------------------------------------------------------------------------------
+
+### Exercise_2.7-Usage
+
+- You can now run searches against the recipe data from anywhere in the app. Certain search options require user
+authentication. A logged out user cannot search for there own recipes since there are none, they can however
+search by all recipes or just return all recipes. The user can also do partial searches. 'Lem' could bring up
+lemonade for example. The recipes that come up in the search results are clickable and take you to the details page.
+The search data is put into a pandas dataframe, and the data is then used to make charts for the recipe detail page. 
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+
 ## Authors
 
 David McNeill
