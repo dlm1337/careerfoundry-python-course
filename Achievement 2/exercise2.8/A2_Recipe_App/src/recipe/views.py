@@ -9,7 +9,6 @@ from django.shortcuts import redirect, render
 from django.utils.html import format_html
 from .models import Recipe
 from django.views.generic.edit import CreateView
-from recipeingredientintermediary.models import RecipeIngredientIntermediary
 
 
 class RecipeHome(ListView):

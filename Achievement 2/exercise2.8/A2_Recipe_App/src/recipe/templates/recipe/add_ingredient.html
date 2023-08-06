@@ -3,7 +3,7 @@
 {% load custom_filters %}
 
 {% block main %}
-<div class="row" style="margin-top: 156px">
+<div class="row" style="margin-top: 206px; text-align: center; justify-content: center; align-items: center;">
     <div class="col-2"></div>
     <div class="col-10">
         <main>
@@ -12,10 +12,10 @@
                 <form method="post">
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <button type="submit">Add Ingredient</button>
+                    <button class="btn btn-primary" type="submit">Add Ingredient</button>
                 </form>
             </section>
-        </main>
+        </main> 
     </div>
 </div>
 {% endblock %}
