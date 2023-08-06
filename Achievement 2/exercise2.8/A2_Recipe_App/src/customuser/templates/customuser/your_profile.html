@@ -1,0 +1,24 @@
+{% extends "recipe/recipes_home.html" %}
+
+{% block main %}
+<div class="row" style="margin-top: 206px">
+    <div class="col-2"></div>
+    <div class="col-10">
+        <main style="padding-left: 50px; padding-right: 50px; padding-bottom:30px;">
+            <section class="container" style="color: white;">
+                <div class="container mt-5">
+                    <h2>Edit Your Profile</h2>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <input type="hidden" name="submit_type" value="profile_update_btn">
+                        <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+</div>
+{% endblock %}
+{% block welcome_script %}
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "recipe/recipes_home.html" %}
+{% load static %}
+{% load custom_filters %}
+
+{% block main %}
+<div class="row" style="margin-top: 156px">
+    <div class="col-2"></div>
+    <div class="col-10">
+        <main>
+            <section class="container" style="padding-bottom: 20px; height: auto; color: white">
+                <h1>Add Ingredient to Recipe</h1>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">Add Ingredient</button>
+                </form>
+            </section>
+        </main>
+    </div>
+</div>
+{% endblock %}
+
+{% block welcome_script %}
+{% endblock %}
