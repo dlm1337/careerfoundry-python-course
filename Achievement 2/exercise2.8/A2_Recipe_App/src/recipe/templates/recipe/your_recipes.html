@@ -22,10 +22,19 @@
                                 <p class="card-text"
                                     style="border:1px solid  #1DE244; border-radius: 3px; word-wrap: break-word; height:120px">
                                     {{object.small_desc}}</p>
-                                <a href="{{object.get_absolute_url}}" class="btn btn-primary">View Recipe</a>
-                                <a href="{% url 'recipe:add_ingredient' pk=object.pk %}" class="btn btn-primary">Add
-                                    Ingredient</a>
-                                <!-- Passing the pk of the clicked recipe to the IngredientAddView URL -->
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <a href="{{object.get_absolute_url}}" class="btn btn-primary"
+                                            style="height: 40px; min-width: 140px; font-size: small;">View Recipe</a>
+                                    </div>
+                                    <div class="col-6">
+                                        <a href="{% url 'recipe:add_ingredient' pk=object.pk %}" class="btn btn-primary"
+                                            style="height: 40px; min-width: 140px; font-size: small;">Add
+                                            Ingredient</a>
+                                        <!-- Passing the pk of the clicked recipe to the IngredientAddView URL -->
+                                    </div>
+                                </div>
                             </div>
 
                         </div>

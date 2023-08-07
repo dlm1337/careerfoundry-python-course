@@ -26,7 +26,7 @@ class CustomUserUpdateForm(forms.ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ["username", "email", "pic", "about_me", "favorite_food"]
+        fields = ["email", "about_me", "favorite_food", "pic"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
