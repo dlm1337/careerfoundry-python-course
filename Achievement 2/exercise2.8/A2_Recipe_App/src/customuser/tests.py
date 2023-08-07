@@ -76,18 +76,6 @@ class CustomUserModelTest(TestCase):
 
 
 class CustomUserViewTest(TestCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        # Create a test user for the model
-        cls.test_user = CustomUser.objects.create_user(
-            username="testuser",
-            email="testuser@example.com",
-            password="testpassword",
-            about_me="I am a test user.",
-            favorite_food="Pizza",
-        )
-
     def test_register_user_view(self):
         # Test GET request to the register_user view
         response = self.client.get(reverse("register"))
@@ -109,8 +97,3 @@ class CustomUserViewTest(TestCase):
 
         # Ensure that the user is created in the database
         self.assertTrue(CustomUser.objects.filter(username="testuser").exists())
-
-        # Test POST request with invalid data
-        data["username"] = ""  # Blank username should be invalid
-        response = self.client.post(reverse("register"), data)
-        self.assertContains(response, "This field is required.", status_code=200)

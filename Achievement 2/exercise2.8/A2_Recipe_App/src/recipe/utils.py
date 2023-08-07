@@ -51,9 +51,9 @@ def get_chart(chart_type, data, **kwargs):
     plt.rcParams["text.color"] = "#632623"
 
     # specify figure size
-    fig = plt.figure(figsize=(6, 3), facecolor="#2ac549")
+    fig = plt.figure(figsize=(12, 6), facecolor="#2ac549")
 
-    # select chart_type based on user input from the form
+    # select chart_type based   on user input from the form
     if chart_type == "#1":
         plt.title("Calorie Content per Ingredient", pad=26)
         plt.bar(
@@ -92,8 +92,8 @@ def get_chart(chart_type, data, **kwargs):
             angle = (patch.theta2 - patch.theta1) / 2.0 + patch.theta1
 
             # Calculate the position of the label outside the pie chart
-            x = patch.r * 1.5 * np.cos(np.deg2rad(angle))
-            y = patch.r * 1.3 * np.sin(np.deg2rad(angle))
+            x = patch.r * 1.4 * np.cos(np.deg2rad(angle))
+            y = patch.r * 1.2 * np.sin(np.deg2rad(angle))
 
             plt.text(
                 x,
@@ -101,8 +101,7 @@ def get_chart(chart_type, data, **kwargs):
                 label,
                 ha="center",
                 va="center",
-                fontsize=10,
-                weight="bold",
+                fontsize=8,
             )
 
         plt.axis("equal")  # Equal aspect ratio ensures that pie is drawn as a circle
