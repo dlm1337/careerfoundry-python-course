@@ -9,6 +9,9 @@ from django.shortcuts import redirect, render
 from django.utils.html import format_html
 from .models import Recipe
 from django.views.generic.edit import CreateView
+from recipeingredient.models import RecipeIngredient
+from ingredient.models import Ingredient
+from django.contrib import messages
 
 
 class RecipeHome(ListView):
@@ -188,10 +191,40 @@ class IngredientAddView(LoginRequiredMixin, CreateView):
     template_name = "recipe/add_ingredient.html"
     success_url = "/"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        recipe_id = self.kwargs.get(
+            "pk"
+        )  # Assuming 'pk' is the keyword argument in your URL pattern
+        print("get_context_data recipe_id:", recipe_id)  # Add this line
+        context["form"].initial["recipe_id"] = recipe_id
+
+        return context
+
     def form_valid(self, form):
-        recipe = self.get_object()  # Get the current Recipe object
+        recipe_id = form.cleaned_data["recipe_id"]
+        recipe = Recipe.objects.get(id=recipe_id)  # Get the Recipe object
+        ingredient_name = form.cleaned_data["ingredient"]
+
+        try:
+            ingredient = Ingredient.objects.get(name=ingredient_name)
+        except Ingredient.DoesNotExist:
+            ingredient = Ingredient(name=ingredient_name)
+            ingredient.save()
+
+        recipe_ingredient = RecipeIngredient()
+        recipe_ingredient.ingredient = ingredient
+        recipe_ingredient.calorie_content = form.cleaned_data["calorie_content"]
+        recipe_ingredient.amount = form.cleaned_data["amount"]
+        recipe_ingredient.amount_type = form.cleaned_data["amount_type"]
+        recipe_ingredient.cost = form.cleaned_data["cost"]
+        recipe_ingredient.supplier = form.cleaned_data["supplier"]
+        recipe_ingredient.grams = form.cleaned_data["grams"]
+        recipe_ingredient.save()
+
         recipe_ingredient_intermediary = form.save(commit=False)
         recipe_ingredient_intermediary.recipe = recipe
+        recipe_ingredient_intermediary.recipe_ingredient = recipe_ingredient
         recipe_ingredient_intermediary.save()
 
         return super().form_valid(form)
