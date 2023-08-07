@@ -5,13 +5,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import RecipeForm, RecipeSearchForm, RecipeIngredientIntermediaryForm
 import pandas as pd
 from .utils import get_recipe_from_title, get_chart
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.utils.html import format_html
 from .models import Recipe
 from django.views.generic.edit import CreateView
 from recipeingredient.models import RecipeIngredient
 from ingredient.models import Ingredient
-from django.contrib import messages
 
 
 class RecipeHome(ListView):
@@ -52,39 +51,45 @@ class RecipeDetailView(DetailView):
         context = super().get_context_data(**kwargs)
 
         # Extract ingredient names from the RecipeIngredient objects
-        ingredients = [
-            ing.ingredient.name for ing in context["object"].recipe_ingredients.all()
-        ]
+        try:
+            ingredients = [
+                ing.ingredient.name
+                for ing in context["object"].recipe_ingredients.all()
+            ]
 
-        # Create a dictionary with ingredient names as keys
-        ingredient_data = {ingredient: None for ingredient in ingredients}
+            # Create a dictionary with ingredient names as keys
+            ingredient_data = {ingredient: None for ingredient in ingredients}
 
-        df = pd.DataFrame.from_dict(
-            ingredient_data, orient="index", columns=["Calorie Content"]
-        )
+            df = pd.DataFrame.from_dict(
+                ingredient_data, orient="index", columns=["Calorie Content"]
+            )
 
-        # Set the 'Calorie Content', 'Grams' and 'Cost' for each ingredient
-        for ing in context["object"].recipe_ingredients.all():
-            df.loc[ing.ingredient.name, "Calorie Content"] = ing.calorie_content
-            df.loc[ing.ingredient.name, "Grams"] = ing.grams
-            df.loc[ing.ingredient.name, "Cost"] = format_cost(float(ing.cost))
+            # Set the 'Calorie Content', 'Grams' and 'Cost' for each ingredient
+            for ing in context["object"].recipe_ingredients.all():
+                df.loc[ing.ingredient.name, "Calorie Content"] = ing.calorie_content
+                df.loc[ing.ingredient.name, "Grams"] = ing.grams
+                df.loc[ing.ingredient.name, "Cost"] = format_cost(float(ing.cost))
 
-        # Convert the DataFrame to HTML
-        df_html = df.to_html(classes="table table-bordered table-hover", escape=False)
+            # Convert the DataFrame to HTML
+            df_html = df.to_html(
+                classes="table table-bordered table-hover", escape=False
+            )
 
-        # Manually add the table ID to the generated HTML
-        df_html = df_html.replace("<table", '<table id="ingredient-info-table"')
-        context["recipe_dataframe"] = df_html
+            # Manually add the table ID to the generated HTML
+            df_html = df_html.replace("<table", '<table id="ingredient-info-table"')
+            context["recipe_dataframe"] = df_html
 
-        # Get the chart HTML using the get_chart
-        chart1 = get_chart("#1", df, x=df.index, y="Calorie Content")
-        chart2 = get_chart("#2", df, x=df.index, y="Grams")
-        chart3 = get_chart("#3", df, x=df.index, y="Cost")
+            # Get the chart HTML using the get_chart
+            chart1 = get_chart("#1", df, x=df.index, y="Calorie Content")
+            chart2 = get_chart("#2", df, x=df.index, y="Grams")
+            chart3 = get_chart("#3", df, x=df.index, y="Cost")
 
-        context["chart1"] = chart1
-        context["chart2"] = chart2
-        context["chart3"] = chart3
-
+            context["chart1"] = chart1
+            context["chart2"] = chart2
+            context["chart3"] = chart3
+        except Exception as e:
+            print("No ingredients: ", str(e))
+            
         return context
 
 
@@ -196,7 +201,6 @@ class IngredientAddView(LoginRequiredMixin, CreateView):
         recipe_id = self.kwargs.get(
             "pk"
         )  # Assuming 'pk' is the keyword argument in your URL pattern
-        print("get_context_data recipe_id:", recipe_id)  # Add this line
         context["form"].initial["recipe_id"] = recipe_id
 
         return context

@@ -9,13 +9,13 @@ from ingredient.models import Ingredient
 from recipeingredientintermediary.models import RecipeIngredientIntermediary
 from django.core.files import File
 from customuser.models import CustomUser
-from .forms import RecipeSearchForm
+from .forms import RecipeSearchForm, RecipeForm, RecipeIngredientIntermediaryForm
 from django.urls import reverse
 from .utils import get_recipe_from_title
 from unittest.mock import patch
 from pandas import DataFrame
 from recipe.views import format_cost
-
+from django.contrib.auth import get_user_model
 import pandas as pd
 
 
@@ -495,3 +495,181 @@ class RecipeViewTest(TestCase):
             if cell.startswith("<img"):  # Ignore the img tag modification
                 continue
             self.assertContains(response, cell.strip())
+
+
+class RecipeCreateViewTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        User = get_user_model()
+        self.user = User.objects.create_user(
+            username="testuser", email="testuser@example.com", password="testpassword"
+        )
+        self.client.login(username="testuser", password="testpassword")
+
+    def test_recipe_create_view_get(self):
+        response = self.client.get(reverse("recipe:create"))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "recipe/recipe_create.html")
+        self.assertIsInstance(response.context["form"], RecipeForm)
+
+    def test_recipe_create_view_post_valid(self):
+        data = {
+            "title": "Test Recipe",
+            "directions": "afraefegseg",
+            "cooking_time": 30,
+            "star_count": 4,
+            "recipe_type": "breakfast",
+            "adapted_link": "https://example.com",
+            "servings": 4,
+            "yield_amount": 6,
+            "allergens": "Dairy, Nuts",
+            "small_desc": "Test description",
+            "pic": "no_picture.jpg",
+            "user": self.user,
+        }
+        response = self.client.post(reverse("recipe:create"), data)
+        self.assertEqual(response.status_code, 302)
+
+    def test_recipe_create_view_requires_authentication(self):
+        self.client.logout()
+        response = self.client.get(reverse("recipe:create"))
+        self.assertEqual(response.status_code, 302)  # Redirect to login page
+        self.assertRedirects(response, "/login/?next=/create/")
+
+
+class IngredientAddViewTestCase(TestCase):
+    def setUp(self):
+        # Create a test user
+        User = get_user_model()
+        self.user = User.objects.create_user(
+            username="testuser", email="testuser@example.com", password="testpassword"
+        )
+
+        # Create a test recipe
+        self.recipe = Recipe.objects.create(
+            title="Test Recipe",
+            directions="afraefegseg",
+            cooking_time=30,
+            star_count=4,
+            recipe_type="breakfast",
+            adapted_link="https://example.com",
+            servings=4,
+            yield_amount=6,
+            allergens="Dairy, Nuts",
+            small_desc="Test description",
+            pic="no_picture.jpg",
+            user=self.user,
+        )
+        # URL for the IngredientAddView
+        self.url = reverse("recipe:add_ingredient", kwargs={"pk": self.recipe.id})
+
+    def test_view_renders_correct_template(self):
+        self.client.login(username="testuser", password="testpassword")
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "recipe/add_ingredient.html")
+
+    def test_view_requires_login(self):
+        response = self.client.get(self.url)
+        self.assertEqual(
+            response.status_code, 302
+        )  # 302 is the redirect status code for unauthorized access
+        self.assertRedirects(response, "/login/?next=/add_ingredient/1/")
+
+    def test_form_submission(self):
+        self.client.login(username="testuser", password="testpassword")
+        response = self.client.post(
+            self.url,
+            {
+                "ingredient": Ingredient.objects.create(name="Ingredient 2"),
+                "calorie_content": 100,
+                "amount": 2,
+                "amount_type": "oz",
+                "cost": 5.0,
+                "supplier": "Test Supplier",
+                "grams": 50,
+            },
+        )
+
+        self.assertEqual(response.status_code, 200)
+
+
+class RecipeFormTests(TestCase):
+    def test_form_save(self):
+        User = get_user_model()
+        self.user = User.objects.create_user(
+            username="testuser", email="testuser@example.com", password="testpassword"
+        )
+        form_data = {
+            "title": "Test Recipe",
+            "directions": "afraefegseg",
+            "cooking_time": 30,
+            "star_count": 4,
+            "recipe_type": "breakfast",
+            "adapted_link": "https://example.com",
+            "servings": 4,
+            "yield_amount": 6,
+            "allergens": "Dairy, Nuts",
+            "small_desc": "Test description",
+            "pic": "no_picture.jpg",
+        }
+
+        # Create an instance of the form with the form data
+        form = RecipeForm(data=form_data)
+        form.instance.user = self.user
+        self.assertTrue(form.is_valid())
+        cleaned_data = form.cleaned_data
+
+        recipe = form.save()
+
+        # Check if the recipe was saved correctly
+        self.assertIsNotNone(recipe)
+        self.assertEqual(recipe.title, cleaned_data["title"])
+        self.assertEqual(recipe.cooking_time, cleaned_data["cooking_time"])
+        self.assertEqual(recipe.star_count, cleaned_data["star_count"])
+        self.assertEqual(recipe.recipe_type, cleaned_data["recipe_type"])
+        self.assertEqual(recipe.adapted_link, cleaned_data["adapted_link"])
+        self.assertEqual(recipe.servings, cleaned_data["servings"])
+        self.assertEqual(recipe.yield_amount, cleaned_data["yield_amount"])
+        self.assertEqual(recipe.allergens, cleaned_data["allergens"])
+        self.assertEqual(recipe.small_desc, cleaned_data["small_desc"])
+
+
+class RecipeIngredientIntermediaryFormTest(TestCase):
+    def test_valid_form(self):
+        form_data = {
+            "ingredient": {"name": "ingredient"},
+            "calorie_content": 50,  # Invalid calorie content
+            "amount": 100,  # Invalid negative amount
+            "amount_type": "cup",  # Invalid amount type
+            "cost": 0,  # Invalid cost (minimum value is 0)
+            "supplier": "awdawd",  # Invalid empty supplier
+            "grams": 150,
+        }
+        form = RecipeIngredientIntermediaryForm(data=form_data)
+        self.assertTrue(form.is_valid())
+
+    def test_invalid_form(self):
+        form_data = {
+            "ingredient": "Flour",
+            "calorie_content": 100,
+            "amount": 250,
+            "amount_type": "grams",
+            "cost": 2.5,
+            "supplier": "wadawd",
+            "grams": 250,
+        }
+        form = RecipeIngredientIntermediaryForm(data=form_data)
+
+        self.assertFalse(form.is_valid())
+        self.assertEqual(len(form.errors), 1)  # Expecting 4 fields with errors
+
+    def test_missing_required_fields(self):
+        form_data = {
+            # Missing required fields ingredient, amount, amount_type, cost, supplier
+            "calorie_content": 150,
+            "grams": 200,
+        }
+        form = RecipeIngredientIntermediaryForm(data=form_data)
+        self.assertFalse(form.is_valid())
+        self.assertEqual(len(form.errors), 5)  # Expecting 5 missing field errors
