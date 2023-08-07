@@ -673,3 +673,42 @@ class RecipeIngredientIntermediaryFormTest(TestCase):
         form = RecipeIngredientIntermediaryForm(data=form_data)
         self.assertFalse(form.is_valid())
         self.assertEqual(len(form.errors), 5)  # Expecting 5 missing field errors
+
+
+class RecipeDeleteViewTest(TestCase):
+    def setUp(self):
+        User = get_user_model()
+        self.user = User.objects.create_user(
+            username="testuser", email="testuser@example.com", password="testpassword"
+        )
+        self.recipe = Recipe.objects.create(
+            title="Test Recipe",
+            directions="afraefegseg",
+            cooking_time=30,
+            star_count=4,
+            recipe_type="breakfast",
+            adapted_link="https://example.com",
+            servings=4,
+            yield_amount=6,
+            allergens="Dairy, Nuts",
+            small_desc="Test description",
+            pic="no_picture.jpg",
+            user=self.user,
+        )
+        self.url = reverse("recipe:delete", args=[self.recipe.pk])
+
+    def test_view_accessible_by_authenticated_user(self):
+        self.client.login(username="testuser", password="testpassword")
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "recipe/delete.html")
+
+    def test_view_inaccessible_by_anonymous_user(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)  # Redirects to login page
+
+    def test_deletion(self):
+        self.client.login(username="testuser", password="testpassword")
+        response = self.client.post(self.url)
+        self.assertEqual(response.status_code, 302)  # Redirects after deletion
+        self.assertFalse(Recipe.objects.filter(pk=self.recipe.pk).exists())

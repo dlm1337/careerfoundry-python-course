@@ -3,7 +3,7 @@ from .views import YourRecipesView
 from .views import RecipeDetailView
 from .views import RecipeHome
 from .views import RecipeSearchView
-from .views import RecipeCreateView, IngredientAddView
+from .views import RecipeCreateView, IngredientAddView, RecipeDeleteView
 
 app_name = "recipe"
 
@@ -17,4 +17,5 @@ urlpatterns = [
     path(
         "add_ingredient/<int:pk>/", IngredientAddView.as_view(), name="add_ingredient"
     ),
+    path("delete/<int:pk>/", RecipeDeleteView.as_view(), name="delete"),
 ]

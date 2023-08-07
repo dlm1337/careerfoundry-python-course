@@ -11,6 +11,9 @@ from .models import Recipe
 from django.views.generic.edit import CreateView
 from recipeingredient.models import RecipeIngredient
 from ingredient.models import Ingredient
+from django.contrib.auth.decorators import login_required
+from django.urls import reverse_lazy
+from django.views.generic import DeleteView
 
 
 class RecipeHome(ListView):
@@ -89,7 +92,7 @@ class RecipeDetailView(DetailView):
             context["chart3"] = chart3
         except Exception as e:
             print("No ingredients: ", str(e))
-            
+
         return context
 
 
@@ -181,7 +184,7 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
     model = Recipe
     form_class = RecipeForm
     template_name = "recipe/recipe_create.html"
-    success_url = "/"  # Use the actual URL name for success URL
+    success_url = "/your_recipes"  # Use the actual URL name for success URL
 
     def form_valid(self, form):
         form.instance.user = (
@@ -194,7 +197,7 @@ class IngredientAddView(LoginRequiredMixin, CreateView):
     model = Recipe
     form_class = RecipeIngredientIntermediaryForm
     template_name = "recipe/add_ingredient.html"
-    success_url = "/"
+    success_url = "/your_recipes"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -232,3 +235,9 @@ class IngredientAddView(LoginRequiredMixin, CreateView):
         recipe_ingredient_intermediary.save()
 
         return super().form_valid(form)
+
+
+class RecipeDeleteView(LoginRequiredMixin, DeleteView):
+    model = Recipe
+    template_name = "recipe/delete.html"
+    success_url = reverse_lazy("recipe:your_recipes")
