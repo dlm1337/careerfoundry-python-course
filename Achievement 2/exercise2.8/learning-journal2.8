@@ -1,0 +1,116 @@
+Exercise 2.8: Deploying a Django Project
+Learning Goals
+
+●	Enhance user experience and look and feel of your web application using CSS and JS
+●	Deploy your Django web application on a web server 
+●	Curate project deliverables for your portfolio
+
+Reflection Questions
+
+1.	Explain how you can use CSS and JavaScript in your Django web application.
+
+
+        Django handles static files by organizing them into folders named static, then naming a subfolder css or js. {% static %}
+        template tag gives access to these static files in the templates. The tags generate URLs for static files and your project 
+        level and in your apps. You can also write in-lines css/script elements directly in the template, but it is best to store this 
+        in static files. Using JS will make the pages more interactive with the DOM. It allows you to set event listeners on the elements 
+        that respond to user interactions and different stages content rendering. You can render modals/popups in response to user 
+        interactions, as well access elements that are dynamically rendering. Js is in the browser allowing for powerful debugging using your 
+        inspect tools, such as adding breakpoints to the script. Giving the power of watching network traffic step by step. JS is powerful at 
+        changing css rules by listening to user interaction, by adding event listeners to the html elements. CSS is great for making applications 
+        responsive with @media css rules, that change css properties based on screen sizes. The css options are vast, granting powerful manipulation 
+        of html elements. The working of CSS and JS together allows for powerful browser interation, responsive/stylized design, and is easy to 
+        render with the help of the Django Framework. There is concerns out there about using JS to much. It can be overused to do things that can 
+        be done by the Django views, and this may affect performance.
+
+        reference: https://medium.com/oda-product-tech/modern-javascript-in-django-templates-2f49a4e94140
+                   https://www.w3schools.com/django/django_add_css_file.php
+
+
+2.	In your own words, explain the steps you’d need to take to deploy your Django web application. 
+
+
+            1. Make a new repository on github with .gitignore for Python and push it.
+            2. copy the contents of my project's src folder into my new repo.
+            3. Add to .gitignore : 
+                        *.bak
+                        *.sqlite3
+            4. Remove secret key in settings and set debug to false.
+            5. Make a Procfile in root for noting entry point to application.(ex -> web: gunicorn bookstore.wsgi --log-file -)
+            6. pip install gunicorn for HTTP server on WSGI
+            7. pip install dj-database-url for Database_Url conversion to Django configs.
+            8. pip install psycopg2 for working with a postgres database on Heroku.
+            9. add to specify DB for production in settings.py(will remain SQLite for development as before):
+                    import dj_database_url
+                    db_from_env = dj_database_url.config(conn_max_age=500)
+                    DATABASES['default'].update(db_from_env)
+            10. Setup static files for deployment by adding:
+                    STATIC_URL = '/static/'
+                    STATICFILES_DIRS=[
+                    BASE_DIR / 'static'
+                    ] 
+                    STATIC_ROOT = BASE_DIR / 'staticfiles'
+            11. pip install whitenoise which is used in combination with gunicorn, enabling Django's self serving static files.
+            12. Set secret key to default:
+                    SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','django-insecure-ml49cp(e)=yakpevh4xz)3w)6xuq6kv7g&3^xf^)gr-n3&p#%9')
+                    to be changed in heroku client.
+            13. pip freeze > requirements.txt.
+            14. Git push/create your heroku account/set up authenticator to use heroku.
+            15. Install Heroku Client.
+            16. heroku login.
+            17. heroku create - to create application.
+            18. git push heroku main - to send to heroku repo.
+            18. heroku run python manage.py migrate - for setting up tables in the postgres db.
+            19. heroku run python manage.py createsuperuser - to have admin level access.
+            20. heroku open.
+            21. copy url.
+            22. in settings.py set it to the allowed host.
+            23. git push heroku main - to send to heroku repo again.
+            24. heroku config:set DJANGO_SECRET_KEY="a-very-long-key-comprised-of-atleast-50-random-characters-
+                including-CAPS-NUMBERS0123456789-and-$p€ccharacters" for regenerating the secret key to secure your application.
+
+
+
+3.	(Optional) Connect with a few Django web developers through LinkedIn or any other network. Ask them for their tips on creating a portfolio to 
+    showcase Python programming and Django skills. Think about which tips could help you improve your portfolio.
+
+
+4.	You’ve now finished Achievement 2 and, with it, the whole course! Take a moment to reflect on your learning:
+
+
+a.	What went well during this Achievement? 
+
+
+    I believe that the 2nd achievement has been very useful in learning a major framework. Django is a powerful, to the point, and a resourceful
+    tool for modern web development. The MVT architecture is easy to follow with what seems to be a common sense approach to web development. I Think
+    CareerFoundry's guidance through model building was a crucial element to the learning process. Making sure the schema is laid out was enforced
+    and I believe it lead to much easier development for the 2nd half of the achievement. The direction through what can be very complex navigations,
+    seemed a lot easier with direction from the course. 
+
+
+b.	What’s something you’re proud of? 
+
+
+        I believe i did well with the testing and structure of the main template. I believe it will not be to difficult ot make the app responsive at
+        this point. The flow of development feels pretty organized at this point, so adding additional content should start to flow at a better pace.
+        I intend to expand on the recipe app, as it is going ot be seen by possible future employers. 
+
+
+c.	What was the most challenging aspect of this Achievement? 
+
+
+        I am going to say being confident you have done enough. This work can be difficult and there are many ways to achieve the same result. I just
+        hope my work reflects good effort and progresses my career forward as a software engineeer.
+
+
+d.	Did this Achievement meet your expectations? Did it give you the confidence to start working with your new Django skills?
+
+
+        Yes, I beleive the achievement will help me move forward as a software engineer. Django, in many ways, seems very to the point and structured 
+        well. I feel pretty comfortable with it, and intend to use it moving forward towards a new career. 
+        
+
+
+
+
+Well done—you’ve now completed the Learning Journal for the whole course. 

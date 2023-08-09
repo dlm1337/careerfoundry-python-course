@@ -42,6 +42,7 @@ This repository contains exercises and scripts for the CareerFoundry Python cour
 - [Exercise_2.7](#exercise_27)
   - [Installation](#exercise_27-installation)
   - [Usage](#exercise_27-usage)
+- [Exercise_2.8](#exercise_28) 
 - [Authors](#authors)
 - [Acknowledgments](#acknowledgments)
  
@@ -417,6 +418,15 @@ The search data is put into a pandas dataframe, and the data is then used to mak
 
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
+
+
+## Exercise_2.8
+
+In exercise 2.8 the deployment of the app to Heroku was successful. The following link is the deployed github Repo for the
+Recipe App. https://github.com/dlm1337/recipe-app. This folder only includes pre-production code, final learning journal
+entry, and testing screen shots.
+
+------------------------------------------------------------------------------------------------------------- 
 
 ## Authors
 
