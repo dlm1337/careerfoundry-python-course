@@ -423,7 +423,7 @@ The search data is put into a pandas dataframe, and the data is then used to mak
 ## Exercise_2.8
 
 In exercise 2.8 the deployment of the app to Heroku was successful. The following link is the deployed github Repo for the
-Recipe App. https://github.com/dlm1337/recipe-app. This folder only includes pre-production code, final learning journal
+Recipe App. https://github.com/dlm1337/recipe-app. The exercise2.8 folder only includes pre-production code, final learning journal
 entry, and testing screen shots.
 
 ------------------------------------------------------------------------------------------------------------- 
