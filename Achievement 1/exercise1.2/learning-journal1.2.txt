@@ -52,8 +52,8 @@ Reflection Questions
 
         A list is mutable, meaning it has values that can be changed after the data structure is initiated.
         A tuple is immutable, meaning it has values that cannot be changed after the data structure is initiated.
-        However you can add to the end of a tuple.  A list allows for being reordered, added to in any position,
-        removed from in any position, and sorted.
+        However you can add to the end of a tuple when creating a new tuple.  A list allows for being reordered, 
+	added to in any position, removed from in any position, and sorted.
 
 
 4.	In the task for this Exercise,
