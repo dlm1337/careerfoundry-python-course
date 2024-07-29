@@ -51,9 +51,8 @@ Write your script here. (Hint: remember what you learned about indents!)
         They can take in parameters inside the parenthesis. If the values being used inside a function need to change, 
         it's a good idea to use parameters. With parameters you can set the required values outside the function. 
         Functions can be called anywhere else in the code and can also be assigned to variables if they return data.
-        Funtions are very useful to make code dynamic, modular, and reusable. Functions are very useful to make code
-        dynamic, modular, and reusable. Using functions improves code organization and readability by putting a name 
-        behind the encapsulated statements.
+        Funtions are very useful to make code dynamic, modular, and reusable. Using functions improves code organization 
+	and readability by putting a name behind the encapsulated statements.
 
 
 4.	In the section for Exercise 1 in this Learning Journal, you were asked in question 3 to set
